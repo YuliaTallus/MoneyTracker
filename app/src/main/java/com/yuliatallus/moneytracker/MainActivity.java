@@ -1,6 +1,7 @@
 package com.yuliatallus.moneytracker;
 
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.NavigationView;
@@ -9,67 +10,37 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ListView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity {
 
     private final String TAG = MainActivity.class.getSimpleName();
-    private Toolbar toolbar;
-    private DrawerLayout drawerLayout;
-    private CoordinatorLayout coordinatorContainer;
+      private DrawerLayout drawerLayout;
+      private ExpensesAdapter expensesAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        coordinatorContainer = (CoordinatorLayout)findViewById(R.id.coordinator_container);
-
         setupToolbar();
+        ListView expensesListView = (ListView)findViewById(R.id.list_view);
+        List<Expense> adapterData = getDataList();
+        expensesAdapter = new ExpensesAdapter(this, adapterData);
+        expensesListView.setAdapter(expensesAdapter);
         setupDrawer();
 
-        Log.i(TAG, "onCreate");
-    }
-
-    @Override
-    protected void onStart(){
-        super.onStart();
-        Log.i(TAG, "onStart");
-    }
-
-    @Override
-    protected void onResume(){
-        super.onResume();
-        Log.i(TAG, "onResume");
-    }
-
-    @Override
-    protected void onPause(){
-        super.onPause();
-        Log.i(TAG, "onPause");
-    }
-
-    @Override
-    protected void onStop(){
-        super.onStop();
-        Log.i(TAG, "onStop");
-    }
-
-    @Override
-    protected void onDestroy(){
-        super.onDestroy();
-        Log.i(TAG, "onDestroy");
-    }
-
-    @Override
-    protected void onRestart(){
-       super.onRestart();
-        Log.i(TAG,"onRestart");
     }
 
     private void setupToolbar(){
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null){
@@ -84,12 +55,21 @@ public class MainActivity extends AppCompatActivity {
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(MenuItem item) {
-                Snackbar.make(coordinatorContainer, item.getTitle(), Snackbar.LENGTH_SHORT).show();
+
                 item.setChecked(true);
                 drawerLayout.closeDrawers();
                 return false;
             }
         });
+    }
+
+    private List<Expense> getDataList(){
+        List<Expense> data = new ArrayList<>();
+        data.add(new Expense("Phone", "9000"));
+        data.add(new Expense("Clothes", "5000"));
+        data.add(new Expense("Food", "1000"));
+        data.add(new Expense("Flat", "4500"));
+        return  data;
     }
 
 }
