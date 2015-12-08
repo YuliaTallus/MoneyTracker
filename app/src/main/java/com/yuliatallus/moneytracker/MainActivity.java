@@ -6,6 +6,9 @@ import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -24,18 +27,19 @@ public class MainActivity extends AppCompatActivity {
 
     private final String TAG = MainActivity.class.getSimpleName();
       private DrawerLayout drawerLayout;
-      private ExpensesAdapter expensesAdapter;
+    private Fragment fragment;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setupToolbar();
-        ListView expensesListView = (ListView)findViewById(R.id.list_view);
-        List<Expense> adapterData = getDataList();
-        expensesAdapter = new ExpensesAdapter(this, adapterData);
-        expensesListView.setAdapter(expensesAdapter);
         setupDrawer();
+
+        if(savedInstanceState == null){
+            getSupportFragmentManager().beginTransaction().replace(R.id.main_container, new ExpensesFragment()).commit();
+        }
 
     }
 
@@ -49,13 +53,30 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Fragment findingFragment = getSupportFragmentManager().findFragmentById(R.id.main_container);
+        if (findingFragment != null && findingFragment instanceof ExpensesFragment){
+            getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        }
+    }
+
+
     private void setupDrawer(){
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         NavigationView navigationView = (NavigationView) findViewById(R.id.navigtion_view);
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(MenuItem item) {
-
+                if (item.getItemId()==R.id.drawer_expenses){
+                    fragment = new ExpensesFragment();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.main_container, new ExpensesFragment()).commit();
+                }
+                else{
+                   fragment = new OtherFragment();
+                }
+                getSupportFragmentManager().beginTransaction().replace(R.id.main_container,fragment).addToBackStack(null).commit();
                 item.setChecked(true);
                 drawerLayout.closeDrawers();
                 return false;
@@ -63,13 +84,14 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private List<Expense> getDataList(){
-        List<Expense> data = new ArrayList<>();
-        data.add(new Expense("Phone", "9000"));
-        data.add(new Expense("Clothes", "5000"));
-        data.add(new Expense("Food", "1000"));
-        data.add(new Expense("Flat", "4500"));
-        return  data;
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        int id = item.getItemId();
+        if (id ==android.R.id.home){
+            drawerLayout.openDrawer(GravityCompat.START);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 }
