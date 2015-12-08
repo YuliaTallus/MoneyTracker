@@ -2,13 +2,11 @@ package com.yuliatallus.moneytracker;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.GregorianCalendar;
 
 public class Expense {
     public String title;
     public int sum;
     public Date date;
-    //public GregorianCalendar date;
 
     public Expense(String title, String sumStr, Date date){
         this.title = title;
