@@ -2,6 +2,7 @@ package com.yuliatallus.moneytracker;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 public class Expense {
     public String title;
@@ -19,7 +20,7 @@ public class Expense {
     }
 
     public String getDateString(){
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.UK);
         return dateFormat.format(date);
     }
 }

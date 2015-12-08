@@ -22,7 +22,7 @@ public class ExpensesAdapter extends ArrayAdapter<Expense>{
         Expense expense = getItem(position);
 
         if (convertView ==null){
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.list_item, parent,false);
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.expenses_item, parent,false);
         }
 
         convertView.setBackgroundColor(Color.parseColor("#FF7B68EE"));
