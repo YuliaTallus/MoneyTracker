@@ -9,9 +9,6 @@ import android.widget.TextView;
 
 import java.util.List;
 
-/**
- * Created by yushe_000 on 07.12.2015.
- */
 public class ExpensesAdapter extends ArrayAdapter<Expense>{
     List<Expense> expenses;
 
@@ -30,9 +27,12 @@ public class ExpensesAdapter extends ArrayAdapter<Expense>{
 
         TextView name = (TextView) convertView.findViewById(R.id.name_text);
         TextView sum = (TextView) convertView.findViewById(R.id.sum_text);
+        TextView date = (TextView)convertView.findViewById(R.id.date_text);
 
         name.setText(expense.title);
-        sum.setText(expense.sum);
+        sum.setText(expense.getSumString());
+        date.setText(expense.getDateString());
+
 
         return convertView;
     }

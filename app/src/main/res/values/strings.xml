@@ -9,4 +9,7 @@
     <string name="email">yushestakova@icloud.com</string>
     <string name="expenses">Траты</string>
     <string name="not_expenses">Не траты</string>
+    <string name="name_text">Name</string>
+    <string name="sum_text">Sum</string>
+    <string name="date_text">Date</string>
 </resources>

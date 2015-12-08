@@ -9,7 +9,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="@dimen/text_size"
-        android:text="Name"
+        android:text="@string/name_text"
         />
 
     <TextView
@@ -17,8 +17,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="@dimen/text_size"
-        android:text="Sum"
+        android:text="@string/sum_text"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"/>
+
+    <TextView
+        android:id="@+id/date_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/text_size"
+        android:text="@string/date_text"
+        android:layout_centerHorizontal="true"/>
 
 </RelativeLayout>

@@ -9,11 +9,10 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
-/**
- * Created by yushe_000 on 07.12.2015.
- */
 public class ExpensesFragment extends Fragment {
 
     @Override
@@ -29,10 +28,13 @@ public class ExpensesFragment extends Fragment {
 
     private List<Expense> getDataList(){
         List<Expense> data = new ArrayList<>();
-        data.add(new Expense("Phone", "9000"));
-        data.add(new Expense("Clothes", "5000"));
-        data.add(new Expense("Food", "1000"));
-        data.add(new Expense("Flat", "4500"));
+        data.add(new Expense("Phone","900", new Date()));
+        data.add(new Expense("Food","5000", new Date()));
+        data.add(new Expense("Flat","3000", new Date()));
+        data.add(new Expense("Clothes","9900", new Date()));
+        data.add(new Expense("Entertainment","500", new Date()));
+        data.add(new Expense("Education","10000", new Date()));
+        data.add(new Expense("PC","800", new Date()));
         return  data;
     }
 }

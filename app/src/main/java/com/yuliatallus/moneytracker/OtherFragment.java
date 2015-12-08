@@ -9,11 +9,10 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
-/**
- * Created by yushe_000 on 07.12.2015.
- */
 public class OtherFragment extends Fragment {
 
     @Override
@@ -29,8 +28,8 @@ public class OtherFragment extends Fragment {
 
     private List<Expense> getDataList(){
         List<Expense> data = new ArrayList<>();
-        data.add(new Expense("Phone", "9000"));
-        data.add(new Expense("Clothes", "5000"));
+        data.add(new Expense("OtherPhone","9000", new Date()));
+        data.add(new Expense("OtherFood","9000", new Date()));
         return  data;
     }
 }
