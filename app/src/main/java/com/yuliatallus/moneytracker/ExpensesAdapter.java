@@ -31,7 +31,7 @@ public class ExpensesAdapter extends ArrayAdapter<Expense>{
         TextView sum = (TextView) convertView.findViewById(R.id.sum_text);
         TextView date = (TextView)convertView.findViewById(R.id.date_text);
 
-        name.setText(expense.title);
+        name.setText(expense.getTitle());
         sum.setText(expense.getSumString());
         date.setText(expense.getDateString());
 

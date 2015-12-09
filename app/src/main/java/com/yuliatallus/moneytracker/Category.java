@@ -1,12 +1,17 @@
 package com.yuliatallus.moneytracker;
 
-/**
- * Created by yushe_000 on 09.12.2015.
- */
 public class Category {
-    public String title;
+    private String title;
 
     public Category(String title){
+        this.title = title;
+    }
+
+    public String getTitle(){
+        return this.title;
+    }
+
+    public void setTitle(String title){
         this.title = title;
     }
 }

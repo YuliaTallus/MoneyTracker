@@ -30,7 +30,7 @@ public class CategoriesAdapter extends ArrayAdapter<Category>{
 
         TextView name = (TextView) convertView.findViewById(R.id.name_text);
 
-        name.setText(category.title);
+        name.setText(category.getTitle());
 
         return convertView;
     }
