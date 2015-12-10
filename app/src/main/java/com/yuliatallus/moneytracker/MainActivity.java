@@ -47,15 +47,25 @@ public class MainActivity extends AppCompatActivity {
     public void onBackPressed() {
 
         Fragment findingFragment = getSupportFragmentManager().findFragmentById(R.id.main_container);
-        if (findingFragment != null && findingFragment instanceof ExpensesFragment){
+        if (findingFragment != null && findingFragment instanceof ExpensesFragment) {
             getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+            navigationView.setCheckedItem(R.id.drawer_expenses);
         }
-        if(drawerLayout.isDrawerOpen(Gravity.LEFT)){
-            drawerLayout.closeDrawer(Gravity.LEFT);
+         else if (findingFragment instanceof CategoriesFragment) {
+            navigationView.setCheckedItem(R.id.drawer_categories);
+        } else if(findingFragment instanceof StatisticsFragment) {
+            navigationView.setCheckedItem(R.id.drawer_statistics);
+        } else if(findingFragment instanceof SettingsFragment) {
+            navigationView.setCheckedItem(R.id.drawer_settings);
+        }
+
+
+        if(drawerLayout.isDrawerOpen(GravityCompat.START)){
+            drawerLayout.closeDrawer(GravityCompat.START);
         }else{
             super.onBackPressed();
         }
-    }
+     }
 
 
     private void setupDrawer(){
@@ -68,22 +78,20 @@ public class MainActivity extends AppCompatActivity {
                 switch (item.getItemId()){
 
                     case R.id.drawer_expenses:fragment = new ExpensesFragment();
-                        navigationView.getMenu().findItem(R.id.drawer_expenses).setChecked(true);
                         break;
 
                     case R.id.drawer_categories:fragment = new CategoriesFragment();
-                        navigationView.getMenu().findItem(R.id.drawer_categories).setChecked(true);
                         break;
 
                     case R.id.drawer_statistics:fragment = new StatisticsFragment();
-                        navigationView.getMenu().findItem(R.id.drawer_statistics).setChecked(true);
                         break;
 
                     case R.id.drawer_settings:fragment = new SettingsFragment();
-                        navigationView.getMenu().findItem(R.id.drawer_settings).setChecked(true);
                         break;
 
                 }
+
+
 
                 getSupportFragmentManager().beginTransaction().replace(R.id.main_container,fragment).addToBackStack(null).commit();
                 item.setChecked(true);

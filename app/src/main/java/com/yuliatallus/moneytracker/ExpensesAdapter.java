@@ -24,8 +24,13 @@ public class ExpensesAdapter extends ArrayAdapter<Expense>{
         if (convertView ==null){
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.expenses_item, parent,false);
         }
+        if(position%2==0){
+            convertView.setBackgroundColor(Color.parseColor("#FF7B68EE"));
+        }
+        else{
+            convertView.setBackgroundColor(Color.parseColor("#9999FF"));
+        }
 
-        convertView.setBackgroundColor(Color.parseColor("#FF7B68EE"));
 
         TextView name = (TextView) convertView.findViewById(R.id.name_text);
         TextView sum = (TextView) convertView.findViewById(R.id.sum_text);

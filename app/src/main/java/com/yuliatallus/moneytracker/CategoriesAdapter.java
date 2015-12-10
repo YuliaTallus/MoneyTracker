@@ -26,7 +26,12 @@ public class CategoriesAdapter extends ArrayAdapter<Category>{
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.categories_item, parent,false);
         }
 
-        convertView.setBackgroundColor(Color.parseColor("#FF7B68EE"));
+        if(position%2==0){
+            convertView.setBackgroundColor(Color.parseColor("#FF7B68EE"));
+        }
+        else{
+            convertView.setBackgroundColor(Color.parseColor("#9999FF"));
+        }
 
         TextView name = (TextView) convertView.findViewById(R.id.name_text);
 
