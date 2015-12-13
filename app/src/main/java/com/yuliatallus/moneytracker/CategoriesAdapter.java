@@ -1,42 +1,45 @@
 package com.yuliatallus.moneytracker;
 
-import android.content.Context;
-import android.graphics.Color;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import java.util.List;
 
-public class CategoriesAdapter extends ArrayAdapter<Category>{
+public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.CardViewHolder> {
     List<Category> categories;
 
-    public CategoriesAdapter(Context context, List<Category> categories) {
-        super(context,0, categories);
+    public CategoriesAdapter(List<Category> categories) {
         this.categories = categories;
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        Category category = getItem(position);
+    public CardViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.categories_item, parent,false);
+        return new CardViewHolder(convertView);
+    }
 
-        if (convertView ==null){
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.categories_item, parent,false);
+    @Override
+    public void onBindViewHolder(CardViewHolder holder, int position) {
+        Category category = categories.get(position);
+
+        holder.name_text.setText(category.getTitle());
+
+    }
+
+    @Override
+    public int getItemCount() {
+        return categories.size();
+    }
+
+    public class CardViewHolder extends RecyclerView.ViewHolder{
+        protected TextView name_text;
+
+        public CardViewHolder(View convertView){
+            super(convertView);
+            name_text = (TextView) convertView.findViewById(R.id.name_text);
         }
-
-        if(position%2==0){
-            convertView.setBackgroundColor(Color.parseColor("#FF7B68EE"));
-        }
-        else{
-            convertView.setBackgroundColor(Color.parseColor("#9999FF"));
-        }
-
-        TextView name = (TextView) convertView.findViewById(R.id.name_text);
-
-        name.setText(category.getTitle());
-
-        return convertView;
     }
 }
