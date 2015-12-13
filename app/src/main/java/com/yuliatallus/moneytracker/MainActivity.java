@@ -23,19 +23,20 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         setupToolbar();
         setupDrawer();
-        if(savedInstanceState == null){
-        getSupportFragmentManager().beginTransaction().replace(R.id.main_container, new ExpensesFragment()).commit();
+
+        if (savedInstanceState == null) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.main_container, new ExpensesFragment()).commit();
         }
     }
 
-    private void setupToolbar(){
+    private void setupToolbar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null){
+        if (actionBar != null) {
             actionBar.setHomeAsUpIndicator(R.mipmap.ic_menu_white_24dp);
             actionBar.setDisplayHomeAsUpEnabled(true);
-          }
+        }
     }
 
     @Override
@@ -45,49 +46,52 @@ public class MainActivity extends AppCompatActivity {
         if (findingFragment != null && findingFragment instanceof ExpensesFragment) {
             getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
             navigationView.setCheckedItem(R.id.drawer_expenses);
-        }
-        else if (findingFragment instanceof CategoriesFragment) {
+        } else if (findingFragment instanceof CategoriesFragment) {
             navigationView.setCheckedItem(R.id.drawer_categories);
-        } else if(findingFragment instanceof StatisticsFragment) {
+        } else if (findingFragment instanceof StatisticsFragment) {
             navigationView.setCheckedItem(R.id.drawer_statistics);
-        } else if(findingFragment instanceof SettingsFragment) {
+        } else if (findingFragment instanceof SettingsFragment) {
             navigationView.setCheckedItem(R.id.drawer_settings);
         }
-        if(drawerLayout.isDrawerOpen(GravityCompat.START)){
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.closeDrawer(GravityCompat.START);
-        }else{
+        } else {
             super.onBackPressed();
         }
     }
 
-    private void setupDrawer(){
+    private void setupDrawer() {
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         navigationView = (NavigationView) findViewById(R.id.navigtion_view);
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(MenuItem item) {
 
-                switch (item.getItemId()){
+                switch (item.getItemId()) {
 
-                    case R.id.drawer_expenses:fragment = new ExpensesFragment();
+                    case R.id.drawer_expenses:
+                        fragment = new ExpensesFragment();
                         break;
 
-                    case R.id.drawer_categories:fragment = new CategoriesFragment();
+                    case R.id.drawer_categories:
+                        fragment = new CategoriesFragment();
                         break;
 
-                    case R.id.drawer_statistics:fragment = new StatisticsFragment();
+                    case R.id.drawer_statistics:
+                        fragment = new StatisticsFragment();
                         break;
 
-                    case R.id.drawer_settings:fragment = new SettingsFragment();
+                    case R.id.drawer_settings:
+                        fragment = new SettingsFragment();
                         break;
                 }
-                getSupportFragmentManager().beginTransaction().replace(R.id.main_container,fragment).addToBackStack(null).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.main_container, fragment).addToBackStack(null).commit();
                 item.setChecked(true);
                 drawerLayout.closeDrawers();
                 return false;
             }
         });
-     }
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
