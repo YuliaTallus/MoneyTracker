@@ -1,6 +1,5 @@
 package com.yuliatallus.moneytracker;
 
-import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -11,32 +10,29 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
+import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.ViewById;
+
+
+@EActivity(R.layout.activity_main)
 public class MainActivity extends AppCompatActivity {
 
-    private DrawerLayout drawerLayout;
-    private Fragment fragment;
-    private NavigationView navigationView;
+    protected Fragment fragment;
+    @ViewById(R.id.drawer_layout)
+    DrawerLayout drawerLayout;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+    @ViewById(R.id.navigtion_view)
+    NavigationView navigationView;
+
+    @ViewById(R.id.toolbar)
+    Toolbar toolbar;
+
+    @AfterViews
+    void ready() {
         setupToolbar();
         setupDrawer();
-
-        if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.main_container, new ExpensesFragment_()).commit();
-        }
-    }
-
-    private void setupToolbar() {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setHomeAsUpIndicator(R.mipmap.ic_menu_white_24dp);
-            actionBar.setDisplayHomeAsUpEnabled(true);
-        }
+        getSupportFragmentManager().beginTransaction().replace(R.id.main_container, new ExpensesFragment_()).commit();
     }
 
     @Override
@@ -48,9 +44,9 @@ public class MainActivity extends AppCompatActivity {
             navigationView.setCheckedItem(R.id.drawer_expenses);
         } else if (findingFragment instanceof CategoriesFragment) {
             navigationView.setCheckedItem(R.id.drawer_categories);
-        } else if (findingFragment instanceof StatisticsFragment) {
+        } else if (findingFragment instanceof StatisticsFragment_) {
             navigationView.setCheckedItem(R.id.drawer_statistics);
-        } else if (findingFragment instanceof SettingsFragment) {
+        } else if (findingFragment instanceof SettingsFragment_) {
             navigationView.setCheckedItem(R.id.drawer_settings);
         }
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
@@ -61,8 +57,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setupDrawer() {
-        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        navigationView = (NavigationView) findViewById(R.id.navigtion_view);
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(MenuItem item) {
@@ -78,11 +72,11 @@ public class MainActivity extends AppCompatActivity {
                         break;
 
                     case R.id.drawer_statistics:
-                        fragment = new StatisticsFragment();
+                        fragment = new StatisticsFragment_();
                         break;
 
                     case R.id.drawer_settings:
-                        fragment = new SettingsFragment();
+                        fragment = new SettingsFragment_();
                         break;
                 }
                 getSupportFragmentManager().beginTransaction().replace(R.id.main_container, fragment).addToBackStack(null).commit();
@@ -93,13 +87,12 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == android.R.id.home) {
-            drawerLayout.openDrawer(GravityCompat.START);
-            return true;
+    private void setupToolbar() {
+        setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setHomeAsUpIndicator(R.mipmap.ic_menu_white_24dp);
+            actionBar.setDisplayHomeAsUpEnabled(true);
         }
-        return super.onOptionsItemSelected(item);
     }
 }
