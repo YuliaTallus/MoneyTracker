@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
         setupDrawer();
 
         if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.main_container, new ExpensesFragment()).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.main_container, new ExpensesFragment_()).commit();
         }
     }
 
@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
     public void onBackPressed() {
 
         Fragment findingFragment = getSupportFragmentManager().findFragmentById(R.id.main_container);
-        if (findingFragment != null && findingFragment instanceof ExpensesFragment) {
+        if (findingFragment != null && findingFragment instanceof ExpensesFragment_) {
             getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
             navigationView.setCheckedItem(R.id.drawer_expenses);
         } else if (findingFragment instanceof CategoriesFragment) {
@@ -70,11 +70,11 @@ public class MainActivity extends AppCompatActivity {
                 switch (item.getItemId()) {
 
                     case R.id.drawer_expenses:
-                        fragment = new ExpensesFragment();
+                        fragment = new ExpensesFragment_();
                         break;
 
                     case R.id.drawer_categories:
-                        fragment = new CategoriesFragment();
+                        fragment = new CategoriesFragment_();
                         break;
 
                     case R.id.drawer_statistics:
