@@ -1,6 +1,5 @@
 package com.yuliatallus.moneytracker;
 
-import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -11,91 +10,89 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
+import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.ViewById;
+
+
+@EActivity(R.layout.activity_main)
 public class MainActivity extends AppCompatActivity {
 
-    private DrawerLayout drawerLayout;
-    private Fragment fragment;
-    private NavigationView navigationView;
+    protected Fragment fragment;
+    @ViewById(R.id.drawer_layout)
+    DrawerLayout drawerLayout;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+    @ViewById(R.id.navigtion_view)
+    NavigationView navigationView;
+
+    @ViewById(R.id.toolbar)
+    Toolbar toolbar;
+
+    @AfterViews
+    void ready() {
         setupToolbar();
         setupDrawer();
-        if(savedInstanceState == null){
-        getSupportFragmentManager().beginTransaction().replace(R.id.main_container, new ExpensesFragment()).commit();
-        }
-    }
-
-    private void setupToolbar(){
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null){
-            actionBar.setHomeAsUpIndicator(R.mipmap.ic_menu_white_24dp);
-            actionBar.setDisplayHomeAsUpEnabled(true);
-          }
+        getSupportFragmentManager().beginTransaction().replace(R.id.main_container, new ExpensesFragment_()).commit();
     }
 
     @Override
     public void onBackPressed() {
 
         Fragment findingFragment = getSupportFragmentManager().findFragmentById(R.id.main_container);
-        if (findingFragment != null && findingFragment instanceof ExpensesFragment) {
+        if (findingFragment != null && findingFragment instanceof ExpensesFragment_) {
             getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
             navigationView.setCheckedItem(R.id.drawer_expenses);
-        }
-        else if (findingFragment instanceof CategoriesFragment) {
+        } else if (findingFragment instanceof CategoriesFragment) {
             navigationView.setCheckedItem(R.id.drawer_categories);
-        } else if(findingFragment instanceof StatisticsFragment) {
+        } else if (findingFragment instanceof StatisticsFragment_) {
             navigationView.setCheckedItem(R.id.drawer_statistics);
-        } else if(findingFragment instanceof SettingsFragment) {
+        } else if (findingFragment instanceof SettingsFragment_) {
             navigationView.setCheckedItem(R.id.drawer_settings);
         }
-        if(drawerLayout.isDrawerOpen(GravityCompat.START)){
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.closeDrawer(GravityCompat.START);
-        }else{
+        } else {
             super.onBackPressed();
         }
     }
 
-    private void setupDrawer(){
-        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        navigationView = (NavigationView) findViewById(R.id.navigtion_view);
+    private void setupDrawer() {
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(MenuItem item) {
 
-                switch (item.getItemId()){
+                switch (item.getItemId()) {
 
-                    case R.id.drawer_expenses:fragment = new ExpensesFragment();
+                    case R.id.drawer_expenses:
+                        fragment = new ExpensesFragment_();
                         break;
 
-                    case R.id.drawer_categories:fragment = new CategoriesFragment();
+                    case R.id.drawer_categories:
+                        fragment = new CategoriesFragment_();
                         break;
 
-                    case R.id.drawer_statistics:fragment = new StatisticsFragment();
+                    case R.id.drawer_statistics:
+                        fragment = new StatisticsFragment_();
                         break;
 
-                    case R.id.drawer_settings:fragment = new SettingsFragment();
+                    case R.id.drawer_settings:
+                        fragment = new SettingsFragment_();
                         break;
                 }
-                getSupportFragmentManager().beginTransaction().replace(R.id.main_container,fragment).addToBackStack(null).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.main_container, fragment).addToBackStack(null).commit();
                 item.setChecked(true);
                 drawerLayout.closeDrawers();
                 return false;
             }
         });
-     }
+    }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == android.R.id.home) {
-            drawerLayout.openDrawer(GravityCompat.START);
-            return true;
+    private void setupToolbar() {
+        setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setHomeAsUpIndicator(R.mipmap.ic_menu_white_24dp);
+            actionBar.setDisplayHomeAsUpEnabled(true);
         }
-        return super.onOptionsItemSelected(item);
     }
 }

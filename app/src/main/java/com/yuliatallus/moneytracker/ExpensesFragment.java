@@ -1,46 +1,50 @@
 package com.yuliatallus.moneytracker;
 
-import android.os.Bundle;
+import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ListView;
+
+import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.Click;
+import org.androidannotations.annotations.EFragment;
+import org.androidannotations.annotations.ViewById;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+@EFragment(R.layout.expenses_fragment)
 public class ExpensesFragment extends Fragment {
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        final View mainView = inflater.inflate(R.layout.expenses_fragment, container, false);
-        RecyclerView expensesRecyclerView = (RecyclerView)mainView.findViewById(R.id.context_recyclerview);
+    @ViewById(R.id.context_recyclerview)
+    RecyclerView expensesRecyclerView;
+
+    @ViewById(R.id.fab)
+    FloatingActionButton floatingActionButton;
+
+
+
+    @Click(R.id.fab)
+    void fabClicked() {
+        if (getView() != null && floatingActionButton.isPressed()) {
+            Intent intent = new Intent(getActivity(), AddExpenseActivity_.class);
+            intent.putExtra("key", "value");
+            getActivity().startActivity(intent);
+        }
+    }
+
+    @AfterViews
+    void ready() {
         List<Expense> adapterData = getDataList();
         ExpensesAdapter expensesAdapter = new ExpensesAdapter(adapterData);
         expensesRecyclerView.setAdapter(expensesAdapter);
-
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         expensesRecyclerView.setLayoutManager(linearLayoutManager);
-
-        FloatingActionButton floatingActionButton = (FloatingActionButton) mainView.findViewById(R.id.fab);
-
-        floatingActionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Snackbar.make(mainView, R.string.nice_text,Snackbar.LENGTH_SHORT).show();
-            }
-        });
-
-        getActivity().setTitle(R.string.nav_drawer_expenses);
-        return mainView;
+        fabClicked();
+        getActivity().setTitle(getString(R.string.nav_drawer_expenses));
     }
 
     private List<Expense> getDataList(){
