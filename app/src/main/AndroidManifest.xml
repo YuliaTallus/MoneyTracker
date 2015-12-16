@@ -14,7 +14,8 @@
         <meta-data android:name="AA_DB_VERSION" android:value="1" />
         <meta-data
             android:name="AA_MODELS"
-            android:value="com.yuliatallus.moneytracker.database.Expenses" />
+            android:value="com.yuliatallus.moneytracker.database.Expenses,
+            com.yuliatallus.moneytracker.database.Categories" />
 
         <activity
             android:name=".ui.activities.MainActivity_"

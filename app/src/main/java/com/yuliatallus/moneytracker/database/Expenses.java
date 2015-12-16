@@ -4,6 +4,8 @@ import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
 
+import java.util.List;
+
 @Table(name = "Expenses")
 public class Expenses extends Model{
 
@@ -17,17 +19,21 @@ public class Expenses extends Model{
     public String date;
 
     @Column(name = "category")
-    public String category;
+    public Categories category;
 
     public Expenses(){
         super();
     }
 
-    public Expenses(String price, String name, String date, String category){
+    public Expenses(String price, String name, String date, Categories category){
         super();
         this.price = price;
         this.name = name;
         this.date = date;
         this.category = category;
+    }
+
+    public List<Expenses> expenses(){
+        return getMany(Expenses.class, "category");
     }
 }
