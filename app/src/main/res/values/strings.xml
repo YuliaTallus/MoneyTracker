@@ -12,5 +12,6 @@
     <string name="date_text">Date</string>
     <string name="perspective_statistic_string">Здесь будет статистика</string>
     <string name="perspective_settings_string">Здесь будут настройки</string>
+    <string name="nice_text">Nice</string>
 
 </resources>

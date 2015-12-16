@@ -8,5 +8,8 @@
     <dimen name="linear_height">56dp</dimen>
     <dimen name="drawer_header_padding_left">16dp</dimen>
     <dimen name="text_size">14sp</dimen>
+    <dimen name="card_corner_radius">1dp</dimen>
+    <dimen name="card_view_margin">5dp</dimen>
+    <dimen name="card_view_height">60dp</dimen>
 
 </resources>
