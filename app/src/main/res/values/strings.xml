@@ -7,4 +7,12 @@
     <string name="nav_drawer_settings">Настройки</string>
     <string name="name">Yiliya Shestakova</string>
     <string name="email">yushestakova@icloud.com</string>
+    <string name="name_text">Name</string>
+    <string name="sum_text">Sum</string>
+    <string name="date_text">Date</string>
+    <string name="perspective_statistic_string">Здесь будет статистика</string>
+    <string name="perspective_settings_string">Здесь будут настройки</string>
+    <string name="nice_text">Nice</string>
+    <string name="add_expense">Добавить трату</string>
+
 </resources>

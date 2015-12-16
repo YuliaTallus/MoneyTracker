@@ -1,90 +1,85 @@
 package com.yuliatallus.moneytracker;
 
-
-import android.os.Bundle;
-import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 
+import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.ViewById;
 
+
+@EActivity(R.layout.activity_main)
 public class MainActivity extends AppCompatActivity {
 
-    private final String TAG = MainActivity.class.getSimpleName();
-    private Toolbar toolbar;
-    private DrawerLayout drawerLayout;
-    private CoordinatorLayout coordinatorContainer;
+    protected Fragment fragment;
+    @ViewById(R.id.drawer_layout)
+    DrawerLayout drawerLayout;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        coordinatorContainer = (CoordinatorLayout)findViewById(R.id.coordinator_container);
+    @ViewById(R.id.navigtion_view)
+    NavigationView navigationView;
 
+    @ViewById(R.id.toolbar)
+    Toolbar toolbar;
+
+    @AfterViews
+    void ready() {
         setupToolbar();
         setupDrawer();
-
-        Log.i(TAG, "onCreate");
+        getSupportFragmentManager().beginTransaction().replace(R.id.main_container, new ExpensesFragment_()).commit();
     }
 
     @Override
-    protected void onStart(){
-        super.onStart();
-        Log.i(TAG, "onStart");
-    }
+    public void onBackPressed() {
 
-    @Override
-    protected void onResume(){
-        super.onResume();
-        Log.i(TAG, "onResume");
-    }
-
-    @Override
-    protected void onPause(){
-        super.onPause();
-        Log.i(TAG, "onPause");
-    }
-
-    @Override
-    protected void onStop(){
-        super.onStop();
-        Log.i(TAG, "onStop");
-    }
-
-    @Override
-    protected void onDestroy(){
-        super.onDestroy();
-        Log.i(TAG, "onDestroy");
-    }
-
-    @Override
-    protected void onRestart(){
-       super.onRestart();
-        Log.i(TAG,"onRestart");
-    }
-
-    private void setupToolbar(){
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null){
-            actionBar.setHomeAsUpIndicator(R.mipmap.ic_menu_white_24dp);
-            actionBar.setDisplayHomeAsUpEnabled(true);
+        Fragment findingFragment = getSupportFragmentManager().findFragmentById(R.id.main_container);
+        if (findingFragment != null && findingFragment instanceof ExpensesFragment_) {
+            getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+            navigationView.setCheckedItem(R.id.drawer_expenses);
+        } else if (findingFragment instanceof CategoriesFragment) {
+            navigationView.setCheckedItem(R.id.drawer_categories);
+        } else if (findingFragment instanceof StatisticsFragment_) {
+            navigationView.setCheckedItem(R.id.drawer_statistics);
+        } else if (findingFragment instanceof SettingsFragment_) {
+            navigationView.setCheckedItem(R.id.drawer_settings);
+        }
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            drawerLayout.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
         }
     }
 
-    private void setupDrawer(){
-        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        NavigationView navigationView = (NavigationView) findViewById(R.id.navigtion_view);
+    private void setupDrawer() {
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(MenuItem item) {
-                Snackbar.make(coordinatorContainer, item.getTitle(), Snackbar.LENGTH_SHORT).show();
+
+                switch (item.getItemId()) {
+
+                    case R.id.drawer_expenses:
+                        fragment = new ExpensesFragment_();
+                        break;
+
+                    case R.id.drawer_categories:
+                        fragment = new CategoriesFragment_();
+                        break;
+
+                    case R.id.drawer_statistics:
+                        fragment = new StatisticsFragment_();
+                        break;
+
+                    case R.id.drawer_settings:
+                        fragment = new SettingsFragment_();
+                        break;
+                }
+                getSupportFragmentManager().beginTransaction().replace(R.id.main_container, fragment).addToBackStack(null).commit();
                 item.setChecked(true);
                 drawerLayout.closeDrawers();
                 return false;
@@ -92,4 +87,12 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    private void setupToolbar() {
+        setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setHomeAsUpIndicator(R.mipmap.ic_menu_white_24dp);
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
+    }
 }
