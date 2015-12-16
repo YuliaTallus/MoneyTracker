@@ -18,7 +18,7 @@
         android:layout_margin="@dimen/activity_horizontal_margin"
         app:layout_anchor="@id/context_recyclerview"
         app:layout_anchorGravity="bottom|right|end"
-        app:layout_behavior=".ScrollFABBehaviour"
+        app:layout_behavior=".util.ScrollFABBehaviour"
         android:src="@drawable/ic_action_add"/>
 
 </android.support.design.widget.CoordinatorLayout>

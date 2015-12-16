@@ -1,7 +1,9 @@
-package com.yuliatallus.moneytracker;
+package com.yuliatallus.moneytracker.ui.activities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+
+import com.yuliatallus.moneytracker.R;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;

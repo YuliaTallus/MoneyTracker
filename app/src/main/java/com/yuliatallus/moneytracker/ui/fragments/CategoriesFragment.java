@@ -1,4 +1,4 @@
-package com.yuliatallus.moneytracker;
+package com.yuliatallus.moneytracker.ui.fragments;
 
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -6,6 +6,10 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
+
+import com.yuliatallus.moneytracker.Category;
+import com.yuliatallus.moneytracker.R;
+import com.yuliatallus.moneytracker.adapters.CategoriesAdapter;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;

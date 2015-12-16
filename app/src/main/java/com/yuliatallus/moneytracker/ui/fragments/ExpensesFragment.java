@@ -1,10 +1,17 @@
-package com.yuliatallus.moneytracker;
+package com.yuliatallus.moneytracker.ui.fragments;
 
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+
+import com.activeandroid.query.Select;
+import com.yuliatallus.moneytracker.ui.activities.AddExpenseActivity_;
+import com.yuliatallus.moneytracker.Expense;
+import com.yuliatallus.moneytracker.R;
+import com.yuliatallus.moneytracker.adapters.ExpensesAdapter;
+import com.yuliatallus.moneytracker.database.Expenses;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
@@ -40,6 +47,10 @@ public class ExpensesFragment extends Fragment {
         List<Expense> adapterData = getDataList();
         ExpensesAdapter expensesAdapter = new ExpensesAdapter(adapterData);
         expensesRecyclerView.setAdapter(expensesAdapter);
+
+        Expenses expenses = new Expenses("123","Cinema", "Fun", "12.13.15");
+        expenses.save();
+
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         expensesRecyclerView.setLayoutManager(linearLayoutManager);
@@ -51,11 +62,17 @@ public class ExpensesFragment extends Fragment {
         List<Expense> data = new ArrayList<>();
         data.add(new Expense("Phone","900", new Date()));
         data.add(new Expense("Food","5000", new Date()));
-        data.add(new Expense("Flat","3000", new Date()));
-        data.add(new Expense("Clothes","9900", new Date()));
-        data.add(new Expense("Entertainment","500", new Date()));
-        data.add(new Expense("Education","10000", new Date()));
-        data.add(new Expense("PC","800", new Date()));
+        data.add(new Expense("Flat", "3000", new Date()));
+        data.add(new Expense("Clothes", "9900", new Date()));
+        data.add(new Expense("Entertainment", "500", new Date()));
+        data.add(new Expense("Education", "10000", new Date()));
+        data.add(new Expense("PC", "800", new Date()));
         return  data;
+    }
+
+    public Expenses getExpense(){
+        return new Select()
+                .from(Expenses.class)
+                .executeSingle();
     }
 }
