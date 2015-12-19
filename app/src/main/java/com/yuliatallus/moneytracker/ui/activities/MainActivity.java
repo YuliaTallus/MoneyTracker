@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
+import com.yuliatallus.moneytracker.database.Categories;
 import com.yuliatallus.moneytracker.ui.fragments.CategoriesFragment_;
 import com.yuliatallus.moneytracker.ui.fragments.ExpensesFragment_;
 import com.yuliatallus.moneytracker.R;
@@ -41,7 +42,20 @@ public class MainActivity extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction().replace(R.id.main_container, new ExpensesFragment_()).commit();
     }
 
-    //private void initCategories
+    private void initCategories(){
+        Categories category1 = new Categories("1");
+        category1.save();
+        Categories category2 = new Categories("2");
+        category2.save();
+        Categories category3 = new Categories("3");
+        category3.save();
+        Categories category4 = new Categories("4");
+        category4.save();
+        Categories category5 = new Categories("5");
+        category5.save();
+        Categories category6 = new Categories("6");
+        category6.save();
+    }
 
     @Override
     public void onBackPressed() {
