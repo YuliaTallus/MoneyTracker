@@ -17,41 +17,39 @@
 
         <TextView
             android:gravity="fill"
-            android:text="Сумма"
+            android:text="@string/sum_hint"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
         <EditText
-            android:hint="1000"
+            android:hint="@string/thousand_hint"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
         <TextView
             android:gravity="fill"
-            android:text="Примечание"
+            android:text="@string/note"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
         <EditText
-            android:hint="Hello"
+            android:hint="@string/hello_hint"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
         <TextView
             android:gravity="fill"
-            android:text="Категория"
+            android:text="@string/category_hint"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
-        <EditText
-            android:hint="Books"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+        <android.support.v7.widget.AppCompatSpinner
+            />
 
         <TextView
             android:gravity="fill"
-            android:text="Дата"
+            android:text="@string/date_rus_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
         <EditText
-            android:hint="10/02/2015"
+            android:hint="@string/date_hint"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 

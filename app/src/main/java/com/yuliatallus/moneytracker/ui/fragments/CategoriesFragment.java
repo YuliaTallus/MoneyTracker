@@ -1,15 +1,21 @@
 package com.yuliatallus.moneytracker.ui.fragments;
 
+import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.AsyncTaskLoader;
+import android.support.v4.content.Loader;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 
+import com.activeandroid.query.Select;
 import com.yuliatallus.moneytracker.Category;
 import com.yuliatallus.moneytracker.R;
 import com.yuliatallus.moneytracker.adapters.CategoriesAdapter;
+import com.yuliatallus.moneytracker.database.Categories;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
@@ -39,9 +45,9 @@ public class CategoriesFragment extends Fragment {
 
     @AfterViews
     void ready() {
-        List<Category> adapterData = getDataList();
-        CategoriesAdapter categoriesAdapter = new CategoriesAdapter(adapterData);
-        categoriesRecyclerView.setAdapter(categoriesAdapter);
+       // List<Category> adapterData = getDataList();
+        //CategoriesAdapter categoriesAdapter = new CategoriesAdapter(adapterData);
+        //categoriesRecyclerView.setAdapter(categoriesAdapter);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         categoriesRecyclerView.setLayoutManager(linearLayoutManager);
@@ -49,15 +55,42 @@ public class CategoriesFragment extends Fragment {
         getActivity().setTitle(getString(R.string.nav_drawer_categories));
     }
 
-    List<Category> getDataList(){
-        List<Category> data = new ArrayList<>();
-        data.add(new Category("Phone"));
-        data.add(new Category("Food"));
-        data.add(new Category("Entertainment"));
-        data.add(new Category("Clothes"));
-        data.add(new Category("Books"));
-        data.add(new Category("Education"));
-        return  data;
+
+
+    private void loadData()
+    {
+        getLoaderManager().restartLoader(0, null, new LoaderManager.LoaderCallbacks<List<Categories>>() {
+            @Override
+            public Loader<List<Categories>> onCreateLoader(int id, Bundle args) {//import android.support.v4.content.AsyncTaskLoader;
+                final AsyncTaskLoader<List<Categories>> loader = new AsyncTaskLoader<List<Categories>>(getActivity()) {
+                    @Override
+                    public List<Categories> loadInBackground() {
+                        return getDataList();
+                    }
+                };
+
+                loader.forceLoad();
+                return loader;
+            }
+
+            @Override
+            public void onLoadFinished(Loader<List<Categories>> loader, List<Categories> data) {
+
+                categoriesRecyclerView.setAdapter(new CategoriesAdapter(data));
+            }
+
+            @Override
+            public void onLoaderReset(Loader<List<Categories>> loader) {
+
+            }
+        });
+    }
+
+    private List<Categories> getDataList()
+    {
+        return new Select()
+                .from(Categories.class)
+                .execute();
     }
 
 }
