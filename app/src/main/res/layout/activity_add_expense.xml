@@ -40,7 +40,8 @@
             android:text="@string/category_hint"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
-        <android.support.v7.widget.AppCompatSpinner
+        <Spinner
+            android:id="@+id/spinner"
             />
 
         <TextView
