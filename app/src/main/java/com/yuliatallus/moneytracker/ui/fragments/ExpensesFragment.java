@@ -46,9 +46,6 @@ public class ExpensesFragment extends Fragment {
 
     @AfterViews
     void ready() {
-       // List<Expense> adapterData = getDataList();
-        //ExpensesAdapter expensesAdapter = new ExpensesAdapter(adapterData);
-        //expensesRecyclerView.setAdapter(expensesAdapter);
 
         Categories categoryFun = new Categories("Fun");
         categoryFun.save();
@@ -63,12 +60,6 @@ public class ExpensesFragment extends Fragment {
         getActivity().setTitle(getString(R.string.nav_drawer_expenses));
         loadData();
     }
-
-//    @Override
-//    public void onResume() {
-//        super.onResume();
-//        loadData();
-//    }
 
     private  void loadData(){
         getLoaderManager().restartLoader(0, null, new LoaderManager.LoaderCallbacks<List<Expenses>>() {

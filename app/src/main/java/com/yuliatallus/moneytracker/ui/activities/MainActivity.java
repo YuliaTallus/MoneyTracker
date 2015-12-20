@@ -44,18 +44,18 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initCategories(){
-        Categories category1 = new Categories("1");
-        category1.save();
-        Categories category2 = new Categories("2");
-        category2.save();
-        Categories category3 = new Categories("3");
-        category3.save();
-        Categories category4 = new Categories("4");
-        category4.save();
-        Categories category5 = new Categories("5");
-        category5.save();
-        Categories category6 = new Categories("6");
-        category6.save();
+        Categories catEntertainment = new Categories("Развлечения");
+        catEntertainment.save();
+        Categories catBooks = new Categories("Книги");
+        catBooks.save();
+        Categories catEducation = new Categories("Образование");
+        catEducation.save();
+        Categories catPhone = new Categories("Телефон");
+        catPhone.save();
+        Categories catFood = new Categories("Еда");
+        catFood .save();
+        Categories catClothes = new Categories("Одежда");
+        catClothes.save();
     }
 
     @Override

@@ -12,7 +12,6 @@ import android.support.v7.widget.RecyclerView;
 
 
 import com.activeandroid.query.Select;
-import com.yuliatallus.moneytracker.Category;
 import com.yuliatallus.moneytracker.R;
 import com.yuliatallus.moneytracker.adapters.CategoriesAdapter;
 import com.yuliatallus.moneytracker.database.Categories;
@@ -22,7 +21,6 @@ import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.ViewById;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @EFragment(R.layout.categories_fragment)
@@ -45,9 +43,6 @@ public class CategoriesFragment extends Fragment {
 
     @AfterViews
     void ready() {
-       // List<Category> adapterData = getDataList();
-        //CategoriesAdapter categoriesAdapter = new CategoriesAdapter(adapterData);
-        //categoriesRecyclerView.setAdapter(categoriesAdapter);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         categoriesRecyclerView.setLayoutManager(linearLayoutManager);
@@ -62,7 +57,7 @@ public class CategoriesFragment extends Fragment {
     {
         getLoaderManager().restartLoader(0, null, new LoaderManager.LoaderCallbacks<List<Categories>>() {
             @Override
-            public Loader<List<Categories>> onCreateLoader(int id, Bundle args) {//import android.support.v4.content.AsyncTaskLoader;
+            public Loader<List<Categories>> onCreateLoader(int id, Bundle args) {
                 final AsyncTaskLoader<List<Categories>> loader = new AsyncTaskLoader<List<Categories>>(getActivity()) {
                     @Override
                     public List<Categories> loadInBackground() {
