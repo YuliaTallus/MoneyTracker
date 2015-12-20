@@ -53,38 +53,46 @@ public class CategoriesFragment extends Fragment {
         categoriesRecyclerView.setLayoutManager(linearLayoutManager);
         fabClicked();
         getActivity().setTitle(getString(R.string.nav_drawer_categories));
+        loadData();
     }
 
 
 
-//    private void loadData()
-//    {
-//        getLoaderManager().restartLoader(0, null, new LoaderManager.LoaderCallbacks<List<Categories>>() {
-//            @Override
-//            public Loader<List<Categories>> onCreateLoader(int id, Bundle args) {//import android.support.v4.content.AsyncTaskLoader;
-//                final AsyncTaskLoader<List<Categories>> loader = new AsyncTaskLoader<List<Categories>>(getActivity()) {
-//                    @Override
-//                    public List<Categories> loadInBackground() {
-//                        return getDataList();
-//                    }
-//                };
-//
-//                loader.forceLoad();
-//                return loader;
-//            }
-//
-//            @Override
-//            public void onLoadFinished(Loader<List<Categories>> loader, List<Categories> data) {
-//
-//                categoriesRecyclerView.setAdapter(new CategoriesAdapter(data));
-//            }
-//
-//            @Override
-//            public void onLoaderReset(Loader<List<Categories>> loader) {
-//
-//            }
-//        });
-//    }
+    private void loadData()
+    {
+        getLoaderManager().restartLoader(0, null, new LoaderManager.LoaderCallbacks<List<Categories>>() {
+            @Override
+            public Loader<List<Categories>> onCreateLoader(int id, Bundle args) {//import android.support.v4.content.AsyncTaskLoader;
+                final AsyncTaskLoader<List<Categories>> loader = new AsyncTaskLoader<List<Categories>>(getActivity()) {
+                    @Override
+                    public List<Categories> loadInBackground() {
+                        return getDataList();
+                    }
+                };
+
+                loader.forceLoad();
+                return loader;
+            }
+
+            @Override
+            public void onLoadFinished(Loader<List<Categories>> loader, List<Categories> data) {
+
+                categoriesRecyclerView.setAdapter(new CategoriesAdapter(data));
+            }
+
+            @Override
+            public void onLoaderReset(Loader<List<Categories>> loader) {
+
+            }
+        });
+    }
+
+    private List<Categories> getDataList()
+    {
+        return new Select()
+                .from(Categories.class)
+                .execute();
+    }
 
 
 }
