@@ -61,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
 
+        super.onBackPressed();
         Fragment findingFragment = getSupportFragmentManager().findFragmentById(R.id.main_container);
         if (findingFragment != null && findingFragment instanceof ExpensesFragment_) {
             getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
@@ -74,11 +75,9 @@ public class MainActivity extends AppCompatActivity {
         }
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
         }
-    }
 
+    }
     private void setupDrawer() {
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override

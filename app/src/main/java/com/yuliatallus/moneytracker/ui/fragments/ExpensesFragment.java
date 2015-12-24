@@ -12,7 +12,6 @@ import android.support.v7.widget.RecyclerView;
 
 import com.activeandroid.query.Select;
 import com.yuliatallus.moneytracker.adapters.ExpensesAdapter;
-import com.yuliatallus.moneytracker.database.Categories;
 import com.yuliatallus.moneytracker.ui.activities.AddExpenseActivity_;
 import com.yuliatallus.moneytracker.R;
 import com.yuliatallus.moneytracker.database.Expenses;
@@ -46,12 +45,6 @@ public class ExpensesFragment extends Fragment {
 
     @AfterViews
     void ready() {
-
-        Categories categoryFun = new Categories("Fun");
-        categoryFun.save();
-        Expenses expenses = new Expenses("123","Cinema","12.13.15", categoryFun);
-        expenses.save();
-
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);

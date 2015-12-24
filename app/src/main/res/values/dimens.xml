@@ -11,5 +11,6 @@
     <dimen name="card_corner_radius">1dp</dimen>
     <dimen name="card_view_margin">5dp</dimen>
     <dimen name="card_view_height">60dp</dimen>
+    <dimen name="edit_text_txtsize">20sp</dimen>
 
 </resources>

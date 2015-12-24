@@ -8,6 +8,14 @@
         android:id="@+id/toolbar"
         layout="@layout/toolbar"/>
 
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Button"
+        android:id="@+id/button"
+        android:layout_gravity="bottom|right" />
+
     <GridLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -19,44 +27,41 @@
             android:gravity="fill"
             android:text="@string/sum_hint"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/edit_text_txtsize"/>
         <EditText
             android:id="@+id/sum_edit_text"
+            android:ems="6"
             android:hint="@string/thousand_hint"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:inputType="number"/>
+            android:inputType="numberDecimal"
+            android:textSize="@dimen/edit_text_txtsize"/>
 
         <TextView
             android:gravity="fill"
             android:text="@string/note"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/edit_text_txtsize"/>
         <EditText
             android:id="@+id/note_edit_text"
+            android:ems="6"
             android:hint="@string/hello_hint"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/edit_text_txtsize"/>
 
         <TextView
             android:gravity="fill"
             android:text="@string/category_hint"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-        <Spinner
-            android:id="@+id/spinner" />
-
-        <TextView
-            android:gravity="fill"
-            android:text="@string/date_rus_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-        <EditText
-            android:id="@+id/date_edit_text"
-            android:hint="@string/date_hint"
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:inputType="numberDecimal"/>
+            android:textSize="@dimen/edit_text_txtsize"/>
+        <Spinner
+            android:id="@+id/spinner"
+            android:layout_width="wrap_content"/>
+
 
     </GridLayout>
 
