@@ -1,10 +1,10 @@
 package com.yuliatallus.moneytracker.ui.activities;
 
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
@@ -37,8 +37,8 @@ public class AddExpenseActivity extends AppCompatActivity {
     @ViewById
     Toolbar toolbar;
 
-    @ViewById(R.id.button)
-    Button button;
+    @ViewById(R.id.fab)
+    FloatingActionButton floatingActionButton;
 
     @ViewById(R.id.sum_edit_text)
     EditText sumEditText;
@@ -62,13 +62,13 @@ public class AddExpenseActivity extends AppCompatActivity {
         setTitle(R.string.add_expense);
         SpinnerAdapter adapter = new MySpinAdapter(this, getDataList());
         spinner.setAdapter(adapter);
-        if (button.isPressed()){
+        if (floatingActionButton.isPressed()){
             buttonClicked();
         }
 
     }
 
-    @Click(R.id.button)
+    @Click(R.id.fab)
     public void buttonClicked(){
         String sumToExpense = sumEditText.getText().toString();
         String noteToExpense = noteEditText.getText().toString();

@@ -51,6 +51,12 @@ public class ExpensesFragment extends Fragment {
         expensesRecyclerView.setLayoutManager(linearLayoutManager);
         fabClicked();
         getActivity().setTitle(getString(R.string.nav_drawer_expenses));
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
         loadData();
     }
 
