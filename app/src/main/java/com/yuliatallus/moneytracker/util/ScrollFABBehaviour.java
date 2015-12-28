@@ -1,4 +1,4 @@
-package com.yuliatallus.moneytracker;
+package com.yuliatallus.moneytracker.util;
 
 import android.content.Context;
 import android.support.design.widget.CoordinatorLayout;

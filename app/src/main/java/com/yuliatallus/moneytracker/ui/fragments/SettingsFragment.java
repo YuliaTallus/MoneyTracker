@@ -1,6 +1,8 @@
-package com.yuliatallus.moneytracker;
+package com.yuliatallus.moneytracker.ui.fragments;
 
 import android.support.v4.app.Fragment;
+
+import com.yuliatallus.moneytracker.R;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EFragment;

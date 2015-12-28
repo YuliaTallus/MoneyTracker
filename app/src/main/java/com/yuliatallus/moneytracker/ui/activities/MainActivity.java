@@ -1,4 +1,4 @@
-package com.yuliatallus.moneytracker;
+package com.yuliatallus.moneytracker.ui.activities;
 
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -9,6 +9,13 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+
+import com.yuliatallus.moneytracker.database.Categories;
+import com.yuliatallus.moneytracker.ui.fragments.CategoriesFragment_;
+import com.yuliatallus.moneytracker.ui.fragments.ExpensesFragment_;
+import com.yuliatallus.moneytracker.R;
+import com.yuliatallus.moneytracker.ui.fragments.SettingsFragment_;
+import com.yuliatallus.moneytracker.ui.fragments.StatisticsFragment_;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
@@ -32,17 +39,34 @@ public class MainActivity extends AppCompatActivity {
     void ready() {
         setupToolbar();
         setupDrawer();
+        initCategories();
         getSupportFragmentManager().beginTransaction().replace(R.id.main_container, new ExpensesFragment_()).commit();
+    }
+
+    private void initCategories(){
+        Categories catEntertainment = new Categories("Развлечения");
+        catEntertainment.save();
+        Categories catBooks = new Categories("Книги");
+        catBooks.save();
+        Categories catEducation = new Categories("Образование");
+        catEducation.save();
+        Categories catPhone = new Categories("Телефон");
+        catPhone.save();
+        Categories catFood = new Categories("Еда");
+        catFood .save();
+        Categories catClothes = new Categories("Одежда");
+        catClothes.save();
     }
 
     @Override
     public void onBackPressed() {
 
+        super.onBackPressed();
         Fragment findingFragment = getSupportFragmentManager().findFragmentById(R.id.main_container);
         if (findingFragment != null && findingFragment instanceof ExpensesFragment_) {
             getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
             navigationView.setCheckedItem(R.id.drawer_expenses);
-        } else if (findingFragment instanceof CategoriesFragment) {
+        } else if (findingFragment instanceof CategoriesFragment_) {
             navigationView.setCheckedItem(R.id.drawer_categories);
         } else if (findingFragment instanceof StatisticsFragment_) {
             navigationView.setCheckedItem(R.id.drawer_statistics);
@@ -51,11 +75,9 @@ public class MainActivity extends AppCompatActivity {
         }
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
         }
-    }
 
+    }
     private void setupDrawer() {
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override

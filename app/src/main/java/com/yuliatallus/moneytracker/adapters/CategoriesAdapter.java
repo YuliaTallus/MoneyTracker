@@ -1,17 +1,19 @@
-package com.yuliatallus.moneytracker;
+package com.yuliatallus.moneytracker.adapters;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import com.yuliatallus.moneytracker.R;
+import com.yuliatallus.moneytracker.database.Categories;
 
 import java.util.List;
 
 public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.CardViewHolder> {
-    List<Category> categories;
+    List<Categories> categories;
 
-    public CategoriesAdapter(List<Category> categories) {
+    public CategoriesAdapter(List<Categories> categories) {
         this.categories = categories;
     }
 
@@ -23,9 +25,9 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Ca
 
     @Override
     public void onBindViewHolder(CardViewHolder holder, int position) {
-        Category category = categories.get(position);
+        Categories category = categories.get(position);
 
-        holder.name_text.setText(category.getTitle());
+        holder.name_text.setText(category.name);
 
     }
 

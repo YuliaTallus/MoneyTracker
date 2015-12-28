@@ -37,4 +37,5 @@
         <item name="android:padding">@dimen/activity_vertical_margin</item>
     </style>
 
+
 </resources>

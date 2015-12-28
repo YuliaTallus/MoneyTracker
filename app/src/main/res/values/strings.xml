@@ -14,5 +14,12 @@
     <string name="perspective_settings_string">Здесь будут настройки</string>
     <string name="nice_text">Nice</string>
     <string name="add_expense">Добавить трату</string>
+    <string name="sum_hint">сумма</string>
+    <string name="thousand_hint">1000</string>
+    <string name="note">примечание</string>
+    <string name="hello_hint">hello</string>
+    <string name="category_hint">категория</string>
+    <string name="date_rus_text">дата</string>
+    <string name="date_hint">10.02.2015</string>
 
 </resources>
