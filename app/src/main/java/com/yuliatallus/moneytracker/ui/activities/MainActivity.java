@@ -25,6 +25,8 @@ import org.androidannotations.annotations.ViewById;
 @EActivity(R.layout.activity_main)
 public class MainActivity extends AppCompatActivity {
 
+
+
     protected Fragment fragment;
     @ViewById(R.id.drawer_layout)
     DrawerLayout drawerLayout;
@@ -41,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
         setupDrawer();
         initCategories();
         getSupportFragmentManager().beginTransaction().replace(R.id.main_container, new ExpensesFragment_()).commit();
+
     }
 
     private void initCategories(){
@@ -117,4 +120,6 @@ public class MainActivity extends AppCompatActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
     }
+
+
 }

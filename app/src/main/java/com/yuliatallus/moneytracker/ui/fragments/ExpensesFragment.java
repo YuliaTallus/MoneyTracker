@@ -9,9 +9,12 @@ import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.content.Loader;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 
 import com.activeandroid.query.Select;
 import com.yuliatallus.moneytracker.adapters.ExpensesAdapter;
+import com.yuliatallus.moneytracker.rest.RestService;
+import com.yuliatallus.moneytracker.rest.model.UserRegistrationModel;
 import com.yuliatallus.moneytracker.ui.activities.AddExpenseActivity_;
 import com.yuliatallus.moneytracker.R;
 import com.yuliatallus.moneytracker.database.Expenses;
@@ -92,5 +95,7 @@ public class ExpensesFragment extends Fragment {
                 .from(Expenses.class)
                 .execute();
     }
+
+
 
 }
