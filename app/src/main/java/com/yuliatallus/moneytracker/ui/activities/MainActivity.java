@@ -8,12 +8,9 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 
 import com.yuliatallus.moneytracker.database.Categories;
-import com.yuliatallus.moneytracker.rest.RestService;
-import com.yuliatallus.moneytracker.rest.model.UserRegistrationModel;
 import com.yuliatallus.moneytracker.ui.fragments.CategoriesFragment_;
 import com.yuliatallus.moneytracker.ui.fragments.ExpensesFragment_;
 import com.yuliatallus.moneytracker.R;
@@ -21,7 +18,6 @@ import com.yuliatallus.moneytracker.ui.fragments.SettingsFragment_;
 import com.yuliatallus.moneytracker.ui.fragments.StatisticsFragment_;
 
 import org.androidannotations.annotations.AfterViews;
-import org.androidannotations.annotations.Background;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
 
@@ -29,7 +25,7 @@ import org.androidannotations.annotations.ViewById;
 @EActivity(R.layout.activity_main)
 public class MainActivity extends AppCompatActivity {
 
-    public static final String TAG = "exp_frag";
+
 
     protected Fragment fragment;
     @ViewById(R.id.drawer_layout)
@@ -47,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
         setupDrawer();
         initCategories();
         getSupportFragmentManager().beginTransaction().replace(R.id.main_container, new ExpensesFragment_()).commit();
-        registerUser();
+
     }
 
     private void initCategories(){
@@ -125,10 +121,5 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    @Background
-    public void registerUser(){
-        RestService restService = new RestService();
-        UserRegistrationModel userRegistrationModel = restService.register("user2", "test1");
-        Log.i(TAG, "status: " + userRegistrationModel.getStatus() + " " + ", id: " + userRegistrationModel.getId());
-    }
+
 }
