@@ -1,50 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:gravity="center_vertical"
-    android:background="#00897B"
-    android:id="@+id/login_activity">
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_margin="@dimen/login_act_layout_margin">
-
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/login_act_text_height"
-        android:maxLength="10"
-        android:background="@color/white"
-        android:textSize="@dimen/login_act_text_size"
-        android:padding="@dimen/login_act_edit_padding"
-        android:id="@+id/edit_login"
-        android:hint="@string/login_text"
-        android:layout_marginBottom="@dimen/edit_text_margin_bottom"/>
-
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/login_act_text_height"
-        android:maxLength="10"
-        android:background="@color/white"
-        android:textSize="@dimen/login_act_text_size"
-        android:padding="@dimen/login_act_edit_padding"
-        android:id="@+id/edit_password"
-        android:hint="@string/password_text"
-        android:inputType="textPassword"
-        />
-
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/login_act_text_height"
-            android:textSize="@dimen/edit_text_txtsize"
-            android:layout_marginTop="@dimen/login_act_text_height"
-            android:id="@+id/login_button"
-            android:text="@string/register_text" />
-
-    </LinearLayout>
-
+    android:layout_height="match_parent">
 
 </LinearLayout>
