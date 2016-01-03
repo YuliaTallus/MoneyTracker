@@ -24,7 +24,7 @@ public class RegisterActivity extends AppCompatActivity{
 
     public static final String TAG = "RegisterActivity";
 
-    @ViewById(R.id.login_activity)
+    @ViewById(R.id.register_activity)
     LinearLayout linLayout;
 
     @ViewById(R.id.edit_login)
@@ -33,23 +33,23 @@ public class RegisterActivity extends AppCompatActivity{
     @ViewById(R.id.edit_password)
     EditText editPassword;
 
-    @ViewById(R.id.login_button)
-    Button loginButton;
+    @ViewById(R.id.register_button)
+    Button registerButton;
 
-    @Click(R.id.login_button)
-    public void loginButtonCicked(){
+    @Click(R.id.register_button)
+    public void registerButtonCicked(){
         if (NetworkStatusChecker.isNetworkAvailable(this)){
             String login = editLogin.getText().toString();
             String password = editPassword.getText().toString();
             if (login.length()<5||password.length()<5){
-                Snackbar.make(linLayout, "Поля должны содержать не менее 5 символов", Snackbar.LENGTH_SHORT).show();
+                Snackbar.make(linLayout, R.string.five_symbol_text, Snackbar.LENGTH_SHORT).show();
             }
             else{
                 registerUser(login, password);
             }
         }
         else{
-            Snackbar.make(linLayout, "Нет подключения", Snackbar.LENGTH_SHORT).show();
+            Snackbar.make(linLayout, R.string.no_connection_text, Snackbar.LENGTH_SHORT).show();
         }
 
 
@@ -58,8 +58,8 @@ public class RegisterActivity extends AppCompatActivity{
     @AfterViews
     void ready(){
 
-        if (loginButton.isPressed()){
-            loginButtonCicked();
+        if (registerButton.isPressed()){
+            registerButtonCicked();
         }
     }
 

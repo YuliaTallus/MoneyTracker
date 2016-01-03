@@ -4,7 +4,8 @@
     android:layout_height="match_parent"
     android:gravity="center_vertical"
     android:background="#00897B"
-    android:id="@+id/login_activity">
+    android:fitsSystemWindows="true"
+    android:id="@+id/register_activity">
 
 
     <LinearLayout
@@ -41,7 +42,7 @@
             android:layout_height="@dimen/login_act_text_height"
             android:textSize="@dimen/edit_text_txtsize"
             android:layout_marginTop="@dimen/login_act_text_height"
-            android:id="@+id/login_button"
+            android:id="@+id/register_button"
             android:text="@string/register_text" />
 
     </LinearLayout>

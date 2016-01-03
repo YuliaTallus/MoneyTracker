@@ -21,8 +21,16 @@
     <string name="category_hint">категория</string>
     <string name="date_rus_text">дата</string>
     <string name="date_hint">10.02.2015</string>
-    <string name="login_text">Login</string>
-    <string name="password_text">Password</string>
-    <string name="register_text">Register</string>
+    <string name="login_text">Логин</string>
+    <string name="password_text">Пароль</string>
+    <string name="register_text">Зарегистрироваться</string>
+    <string name="enter_text">Войти</string>
+    <string name="no_registration_text">Еще не зарегистрировались?</string>
+    <string name="no_connection_text">Нет подключения</string>
+    <string name="five_symbol_text">Поля должны содержать не менее 5 символов</string>
+    <string name="wrong_password_text">Неверный пароль</string>
+    <string name="wrong_login_text">Пользователь с таким логином не существует</string>
+    <string name="splash_image">splash image</string>
+
 
 </resources>
