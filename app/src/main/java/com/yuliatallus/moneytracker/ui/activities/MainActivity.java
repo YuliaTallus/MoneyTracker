@@ -1,5 +1,6 @@
 package com.yuliatallus.moneytracker.ui.activities;
 
+import android.content.Intent;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -8,9 +9,13 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 
+import com.activeandroid.query.Select;
 import com.yuliatallus.moneytracker.database.Categories;
+import com.yuliatallus.moneytracker.rest.RestService;
+import com.yuliatallus.moneytracker.rest.model.CreateCategory;
 import com.yuliatallus.moneytracker.ui.fragments.CategoriesFragment_;
 import com.yuliatallus.moneytracker.ui.fragments.ExpensesFragment_;
 import com.yuliatallus.moneytracker.R;
@@ -18,14 +23,17 @@ import com.yuliatallus.moneytracker.ui.fragments.SettingsFragment_;
 import com.yuliatallus.moneytracker.ui.fragments.StatisticsFragment_;
 
 import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.Background;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
+
+import java.util.List;
 
 
 @EActivity(R.layout.activity_main)
 public class MainActivity extends AppCompatActivity {
 
-
+    private static final String TAG = MainActivity.class.getSimpleName();
 
     protected Fragment fragment;
     @ViewById(R.id.drawer_layout)
@@ -42,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
         setupToolbar();
         setupDrawer();
         initCategories();
+        addCategory(getDataList());
         getSupportFragmentManager().beginTransaction().replace(R.id.main_container, new ExpensesFragment_()).commit();
 
     }
@@ -119,6 +128,35 @@ public class MainActivity extends AppCompatActivity {
             actionBar.setHomeAsUpIndicator(R.mipmap.ic_menu_white_24dp);
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
+    }
+
+    private List<Categories> getDataList()
+    {
+        return new Select()
+                .from(Categories.class)
+                .execute();
+    }
+
+    @Background
+    void addCategory(List<Categories> list){
+        RestService restService = new RestService();
+        for (Categories cat: list){
+            CreateCategory createCategory = restService.createCategory(cat.name);
+            switch (createCategory.getStatus()){
+
+                case "success":
+                    Log.d(TAG, "Status: " + createCategory.getStatus() +
+                            ", Title: " + createCategory.getData().getTitle() +
+                            ", Id: " + createCategory.getData().getId());
+                    break;
+
+                case "unauthorized":
+                    startActivity(new Intent(this, LoginActivity_.class));
+                    break;
+            }
+
+        }
+
     }
 
 

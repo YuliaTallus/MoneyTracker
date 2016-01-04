@@ -95,9 +95,6 @@ public class LoginActivity extends AppCompatActivity{
                 break;
         }
 
-//        CreateCategory createCategory = restService.createCategory("Test1");
-//        Log.d(TAG, "Status: " + createCategory.getStatus() +
-//                ", Title: " + createCategory.getData().getTitle() +
-//                ", Id: " + createCategory.getData().getId());
+
     }
 }
