@@ -8,8 +8,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
+import com.yuliatallus.moneytracker.MoneyTrackerApplication;
 import com.yuliatallus.moneytracker.R;
 import com.yuliatallus.moneytracker.rest.RestService;
+import com.yuliatallus.moneytracker.rest.model.UserLoginModel;
 import com.yuliatallus.moneytracker.rest.model.UserRegistrationModel;
 import com.yuliatallus.moneytracker.util.NetworkStatusChecker;
 
@@ -75,6 +77,20 @@ public class RegisterActivity extends AppCompatActivity{
             Intent intent = new Intent(this, MainActivity_.class);
             intent.putExtra("key", "value");
             this.startActivity(intent);
+        }
+
+        switch (userRegistrationModel.getStatus()){
+
+            case "success":
+                UserLoginModel userLoginModel = restService.login(log, pas);
+                MoneyTrackerApplication.setAuthToken(userLoginModel.getAuthToken());
+                Log.d(TAG, "Status: " + userLoginModel.getStatus() + ", token: " + MoneyTrackerApplication.getAuthKey());
+                startActivity(new Intent(this, MainActivity_.class));
+                break;
+            case "Login busy already":
+                Snackbar.make(linLayout, "Пользователь с таким логином уже существует", Snackbar.LENGTH_SHORT).show();
+                break;
+
         }
     }
 }
