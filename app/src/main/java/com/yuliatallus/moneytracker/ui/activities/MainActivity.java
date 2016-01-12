@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.MenuItem;
 
 import com.activeandroid.query.Select;
+import com.yuliatallus.moneytracker.MoneyTrackerApplication;
 import com.yuliatallus.moneytracker.database.Categories;
 import com.yuliatallus.moneytracker.rest.RestService;
 import com.yuliatallus.moneytracker.rest.model.CreateCategory;
@@ -58,16 +59,16 @@ public class MainActivity extends AppCompatActivity {
     private void initCategories(){
         Categories catEntertainment = new Categories("Развлечения");
         catEntertainment.save();
-        Categories catBooks = new Categories("Книги");
-        catBooks.save();
-        Categories catEducation = new Categories("Образование");
-        catEducation.save();
-        Categories catPhone = new Categories("Телефон");
-        catPhone.save();
-        Categories catFood = new Categories("Еда");
-        catFood .save();
-        Categories catClothes = new Categories("Одежда");
-        catClothes.save();
+//        Categories catBooks = new Categories("Книги");
+//        catBooks.save();
+//        Categories catEducation = new Categories("Образование");
+//        catEducation.save();
+//        Categories catPhone = new Categories("Телефон");
+//        catPhone.save();
+//        Categories catFood = new Categories("Еда");
+//        catFood .save();
+//        Categories catClothes = new Categories("Одежда");
+//        catClothes.save();
     }
 
     @Override
@@ -147,7 +148,8 @@ public class MainActivity extends AppCompatActivity {
                 case "success":
                     Log.d(TAG, "Status: " + createCategory.getStatus() +
                             ", Title: " + createCategory.getData().getTitle() +
-                            ", Id: " + createCategory.getData().getId());
+                            ", Id: " + createCategory.getData().getId() +
+                            MoneyTrackerApplication.getAuthKey());
                     break;
 
                 case "unauthorized":

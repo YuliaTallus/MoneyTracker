@@ -69,15 +69,15 @@ public class RegisterActivity extends AppCompatActivity{
     public void registerUser(String log, String pas){
         RestService restService = new RestService();
         UserRegistrationModel userRegistrationModel = restService.register(log, pas);
-        Log.i(TAG, "status: " + userRegistrationModel.getStatus() + " " + ", id: " + userRegistrationModel.getId());
-        if (!userRegistrationModel.getStatus().equalsIgnoreCase("success")){
-            Snackbar.make(linLayout, "Пользователь с таким логином уже существует", Snackbar.LENGTH_SHORT).show();
-        }
-        else {
-            Intent intent = new Intent(this, MainActivity_.class);
-            intent.putExtra("key", "value");
-            this.startActivity(intent);
-        }
+//        Log.i(TAG, "status: " + userRegistrationModel.getStatus() + " " + ", id: " + userRegistrationModel.getId());
+//        if (!userRegistrationModel.getStatus().equalsIgnoreCase("success")){
+//            Snackbar.make(linLayout, "Пользователь с таким логином уже существует", Snackbar.LENGTH_SHORT).show();
+//        }
+//        else {
+//            Intent intent = new Intent(this, MainActivity_.class);
+//            intent.putExtra("key", "value");
+//            this.startActivity(intent);
+//        }
 
         switch (userRegistrationModel.getStatus()){
 

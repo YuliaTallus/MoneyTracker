@@ -32,7 +32,6 @@ public class ExpensesAdapter extends RecyclerView.Adapter<ExpensesAdapter.CardVi
         holder.name_text.setText(expense.name);
         holder.sum_text.setText(expense.price);
         holder.date_text.setText(expense.date);
-        // ADD CATEGORY FIELD!!!!!!!!!!!!!
     }
 
     @Override
