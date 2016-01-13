@@ -2,11 +2,17 @@ package com.yuliatallus.moneytracker.util;
 
 public final class ConstantBox {
 
-    public static final String categories = "Categories";
-    public static final String expenses = "Expenses";
-    public static final String name = "name";
-    public static final String price = "price";
-    public static final String date = "date";
-    public static final String category = "category";
+    public static final String CATEGORIES = "Categories";
+    public static final String EXPENSES = "Expenses";
+    public static final String NAME = "name";
+    public static final String PRICE = "price";
+    public static final String DATE = "date";
+    public static final String CATEGORY = "category";
+    public static final String SUCCESS = "success";
+    public static final String WRONG_PASSWORD = "Wrong password";
+    public static final String WRONG_LOGIN = "Wrong login";
+    public static final String ERROR = "Error";
+    public static final String UNAUTHORIZED = "unauthorized";
+    public static final String LOGIN_IS_BUSY = "Login busy already";
 
 }

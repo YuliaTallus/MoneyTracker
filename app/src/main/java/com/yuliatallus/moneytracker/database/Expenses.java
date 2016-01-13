@@ -7,19 +7,19 @@ import com.yuliatallus.moneytracker.util.ConstantBox;
 
 import java.util.List;
 
-@Table(name = ConstantBox.expenses)
+@Table(name = ConstantBox.EXPENSES)
 public class Expenses extends Model{
 
-    @Column(name = ConstantBox.price)
+    @Column(name = ConstantBox.PRICE)
     public String price;
 
-    @Column(name = ConstantBox.name)
+    @Column(name = ConstantBox.NAME)
     public String name;
 
-    @Column(name = ConstantBox.date)
+    @Column(name = ConstantBox.DATE)
     public String date;
 
-    @Column(name = ConstantBox.category)
+    @Column(name = ConstantBox.CATEGORY)
     public Categories category;
 
     public Expenses(){
@@ -35,6 +35,6 @@ public class Expenses extends Model{
     }
 
     public List<Expenses> expenses(){
-        return getMany(Expenses.class, ConstantBox.category);
+        return getMany(Expenses.class, ConstantBox.CATEGORY);
     }
 }

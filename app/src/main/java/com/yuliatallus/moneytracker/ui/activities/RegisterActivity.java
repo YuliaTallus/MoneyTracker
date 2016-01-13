@@ -13,9 +13,9 @@ import com.yuliatallus.moneytracker.R;
 import com.yuliatallus.moneytracker.rest.RestService;
 import com.yuliatallus.moneytracker.rest.model.UserLoginModel;
 import com.yuliatallus.moneytracker.rest.model.UserRegistrationModel;
+import com.yuliatallus.moneytracker.util.ConstantBox;
 import com.yuliatallus.moneytracker.util.NetworkStatusChecker;
 
-import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Background;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
@@ -57,40 +57,22 @@ public class RegisterActivity extends AppCompatActivity{
 
     }
 
-    @AfterViews
-    void ready(){
-
-        if (registerButton.isPressed()){
-            registerButtonCicked();
-        }
-    }
-
     @Background
     public void registerUser(String log, String pas){
         RestService restService = new RestService();
         UserRegistrationModel userRegistrationModel = restService.register(log, pas);
-//        Log.i(TAG, "status: " + userRegistrationModel.getStatus() + " " + ", id: " + userRegistrationModel.getId());
-//        if (!userRegistrationModel.getStatus().equalsIgnoreCase("success")){
-//            Snackbar.make(linLayout, "Пользователь с таким логином уже существует", Snackbar.LENGTH_SHORT).show();
-//        }
-//        else {
-//            Intent intent = new Intent(this, MainActivity_.class);
-//            intent.putExtra("key", "value");
-//            this.startActivity(intent);
-//        }
 
         switch (userRegistrationModel.getStatus()){
 
-            case "success":
+            case ConstantBox.SUCCESS:
                 UserLoginModel userLoginModel = restService.login(log, pas);
                 MoneyTrackerApplication.setAuthToken(userLoginModel.getAuthToken());
                 Log.d(TAG, "Status: " + userLoginModel.getStatus() + ", token: " + MoneyTrackerApplication.getAuthKey());
                 startActivity(new Intent(this, MainActivity_.class));
                 break;
-            case "Login busy already":
-                Snackbar.make(linLayout, "Пользователь с таким логином уже существует", Snackbar.LENGTH_SHORT).show();
+            case ConstantBox.LOGIN_IS_BUSY:
+                Snackbar.make(linLayout, R.string.login_is_busy, Snackbar.LENGTH_SHORT).show();
                 break;
-
         }
     }
 }

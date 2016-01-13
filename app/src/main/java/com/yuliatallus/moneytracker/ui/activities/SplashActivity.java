@@ -16,7 +16,6 @@ import org.androidannotations.annotations.ViewById;
 
 @EActivity(R.layout.activity_splash)
 public class SplashActivity extends AppCompatActivity{
-    String token;
 
     @ViewById(R.id.activity_splash)
     LinearLayout linLayout;
@@ -34,13 +33,11 @@ public class SplashActivity extends AppCompatActivity{
 
     @Background(delay = 1500)
     void launchActivity(){
-        token = MoneyTrackerApplication.getAuthKey();
-        if (token.equals("")){
+        if (MoneyTrackerApplication.getAuthKey().equals("")){
             startActivity(new Intent(this, LoginActivity_.class));
         }
         else{
             startActivity(new Intent(this, MainActivity_.class));
         }
-
     }
 }

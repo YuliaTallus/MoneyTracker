@@ -13,6 +13,7 @@ import com.yuliatallus.moneytracker.MoneyTrackerApplication;
 import com.yuliatallus.moneytracker.R;
 import com.yuliatallus.moneytracker.rest.RestService;
 import com.yuliatallus.moneytracker.rest.model.UserLoginModel;
+import com.yuliatallus.moneytracker.util.ConstantBox;
 import com.yuliatallus.moneytracker.util.NetworkStatusChecker;
 
 import org.androidannotations.annotations.Background;
@@ -41,12 +42,6 @@ public class LoginActivity extends AppCompatActivity{
     @ViewById(R.id.no_registration_text_view)
     TextView noRegText;
 
-//    @AfterViews
-//    void ready(){
-//
-//
-//    }
-
     @Click(R.id.login_button)
     void loginButtonClicked(){
         if (NetworkStatusChecker.isNetworkAvailable(this)){
@@ -61,9 +56,7 @@ public class LoginActivity extends AppCompatActivity{
 
     @Click(R.id.no_registration_text_view)
     void noRegTextClicked(){
-        Intent intent = new Intent(this, RegisterActivity_.class);
-        intent.putExtra("key", "value");
-        this.startActivity(intent);
+        startActivity(new Intent(this, RegisterActivity_.class));
     }
 
     @Background
@@ -73,25 +66,22 @@ public class LoginActivity extends AppCompatActivity{
 
         switch (userLoginModel.getStatus()){
 
-            case "success":
+            case ConstantBox.SUCCESS:
                 MoneyTrackerApplication.setAuthToken(userLoginModel.getAuthToken());
                 Log.d(TAG, "Status: " + userLoginModel.getStatus() + ", token: " + MoneyTrackerApplication.getAuthKey());
-                Intent intent = new Intent(this, MainActivity_.class);
-                intent.putExtra("key", "value");
-                this.startActivity(intent);
+                startActivity(new Intent(this, MainActivity_.class));
                 break;
 
-            case "Wrong password":
+            case ConstantBox.WRONG_PASSWORD:
                 Snackbar.make(linLayout, R.string.wrong_password_text, Snackbar.LENGTH_SHORT).show();
                 break;
 
-            case "Wrong login":
+            case ConstantBox.WRONG_LOGIN:
                 Snackbar.make(linLayout, R.string.wrong_login_text, Snackbar.LENGTH_SHORT).show();
                 break;
 
-            case "Error":
-                Snackbar.make(linLayout, "Случилась какая-то неведомая хрень. Мы пока не знаем, что с ней делать",
-                        Snackbar.LENGTH_SHORT).show();
+            case ConstantBox.ERROR:
+                Snackbar.make(linLayout, R.string.unknown_error, Snackbar.LENGTH_SHORT).show();
                 break;
         }
 

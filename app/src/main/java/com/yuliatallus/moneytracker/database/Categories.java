@@ -5,10 +5,10 @@ import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
 import com.yuliatallus.moneytracker.util.ConstantBox;
 
-@Table(name = ConstantBox.categories)
+@Table(name = ConstantBox.CATEGORIES)
 public class Categories extends Model {
 
-    @Column(name = ConstantBox.name)
+    @Column(name = ConstantBox.NAME)
     public String name;
 
     public Categories(){

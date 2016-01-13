@@ -18,6 +18,7 @@ import com.yuliatallus.moneytracker.rest.model.UserRegistrationModel;
 import com.yuliatallus.moneytracker.ui.activities.AddExpenseActivity_;
 import com.yuliatallus.moneytracker.R;
 import com.yuliatallus.moneytracker.database.Expenses;
+import com.yuliatallus.moneytracker.ui.activities.MainActivity_;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
@@ -39,11 +40,7 @@ public class ExpensesFragment extends Fragment {
 
     @Click(R.id.fab)
     void fabClicked() {
-        if (getView() != null && floatingActionButton.isPressed()) {
-            Intent intent = new Intent(getActivity(), AddExpenseActivity_.class);
-            intent.putExtra("key", "value");
-            getActivity().startActivity(intent);
-        }
+            startActivity(new Intent(getActivity(), AddExpenseActivity_.class));
     }
 
     @AfterViews
@@ -52,7 +49,6 @@ public class ExpensesFragment extends Fragment {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         expensesRecyclerView.setLayoutManager(linearLayoutManager);
-        fabClicked();
         getActivity().setTitle(getString(R.string.nav_drawer_expenses));
 
     }

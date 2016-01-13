@@ -22,6 +22,7 @@ import com.yuliatallus.moneytracker.ui.fragments.ExpensesFragment_;
 import com.yuliatallus.moneytracker.R;
 import com.yuliatallus.moneytracker.ui.fragments.SettingsFragment_;
 import com.yuliatallus.moneytracker.ui.fragments.StatisticsFragment_;
+import com.yuliatallus.moneytracker.util.ConstantBox;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Background;
@@ -59,16 +60,16 @@ public class MainActivity extends AppCompatActivity {
     private void initCategories(){
         Categories catEntertainment = new Categories("Развлечения");
         catEntertainment.save();
-//        Categories catBooks = new Categories("Книги");
-//        catBooks.save();
-//        Categories catEducation = new Categories("Образование");
-//        catEducation.save();
-//        Categories catPhone = new Categories("Телефон");
-//        catPhone.save();
-//        Categories catFood = new Categories("Еда");
-//        catFood .save();
-//        Categories catClothes = new Categories("Одежда");
-//        catClothes.save();
+        Categories catBooks = new Categories("Книги");
+        catBooks.save();
+        Categories catEducation = new Categories("Образование");
+        catEducation.save();
+        Categories catPhone = new Categories("Телефон");
+        catPhone.save();
+        Categories catFood = new Categories("Еда");
+        catFood .save();
+        Categories catClothes = new Categories("Одежда");
+        catClothes.save();
     }
 
     @Override
@@ -145,14 +146,14 @@ public class MainActivity extends AppCompatActivity {
             CreateCategory createCategory = restService.createCategory(cat.name);
             switch (createCategory.getStatus()){
 
-                case "success":
+                case ConstantBox.SUCCESS:
                     Log.d(TAG, "Status: " + createCategory.getStatus() +
                             ", Title: " + createCategory.getData().getTitle() +
                             ", Id: " + createCategory.getData().getId() +
                             MoneyTrackerApplication.getAuthKey());
                     break;
 
-                case "unauthorized":
+                case ConstantBox.UNAUTHORIZED:
                     startActivity(new Intent(this, LoginActivity_.class));
                     break;
             }
