@@ -132,6 +132,16 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == android.R.id.home) {
+            drawerLayout.openDrawer(GravityCompat.START);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
     private List<Categories> getDataList()
     {
         return new Select()
