@@ -7,12 +7,12 @@ import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.yuliatallus.moneytracker.MoneyTrackerApplication;
 import com.yuliatallus.moneytracker.R;
 import com.yuliatallus.moneytracker.rest.RestService;
 import com.yuliatallus.moneytracker.rest.model.UserLoginModel;
+import com.yuliatallus.moneytracker.rest.model.UserRegistrationModel;
 import com.yuliatallus.moneytracker.util.ConstantBox;
 import com.yuliatallus.moneytracker.util.NetworkStatusChecker;
 
@@ -21,13 +21,12 @@ import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
 
-@EActivity(R.layout.login_activity)
-public class LoginActivity extends AppCompatActivity{
+@EActivity(R.layout.register_activity)
+public class RegisterActivity extends AppCompatActivity{
 
-    private static final String TAG = LoginActivity.class.getSimpleName();
+    public static final String TAG = "RegisterActivity";
 
-
-    @ViewById(R.id.login_activity)
+    @ViewById(R.id.register_activity)
     LinearLayout linLayout;
 
     @ViewById(R.id.edit_login)
@@ -36,60 +35,44 @@ public class LoginActivity extends AppCompatActivity{
     @ViewById(R.id.edit_password)
     EditText editPassword;
 
-    @ViewById(R.id.login_button)
-    Button loginButton;
+    @ViewById(R.id.register_button)
+    Button registerButton;
 
-    @ViewById(R.id.no_registration_text_view)
-    TextView noRegText;
-
-    @Click(R.id.login_button)
-    void loginButtonClicked(){
+    @Click(R.id.register_button)
+    public void registerButtonCicked(){
         if (NetworkStatusChecker.isNetworkAvailable(this)){
             String login = editLogin.getText().toString();
             String password = editPassword.getText().toString();
             if (login.length()<5||password.length()<5){
                 Snackbar.make(linLayout, R.string.five_symbol_text, Snackbar.LENGTH_SHORT).show();
             }
-            else {
-                login(login,password);
+            else{
+                registerUser(login, password);
             }
         }
         else{
             Snackbar.make(linLayout, R.string.no_connection_text, Snackbar.LENGTH_SHORT).show();
         }
-    }
 
-    @Click(R.id.no_registration_text_view)
-    void noRegTextClicked(){
-        startActivity(new Intent(this, RegisterActivity_.class));
+
     }
 
     @Background
-    void login(String login,String password){
+    public void registerUser(String log, String pas){
         RestService restService = new RestService();
-        UserLoginModel userLoginModel = restService.login(login, password);
+        UserRegistrationModel userRegistrationModel = restService.register(log, pas);
 
-        switch (userLoginModel.getStatus()){
+        switch (userRegistrationModel.getStatus()){
 
             case ConstantBox.SUCCESS:
+                UserLoginModel userLoginModel = restService.login(log, pas);
                 MoneyTrackerApplication.setAuthToken(userLoginModel.getAuthToken());
                 Log.d(TAG, "Status: " + userLoginModel.getStatus() + ", token: " + MoneyTrackerApplication.getAuthKey());
                 startActivity(new Intent(this, MainActivity_.class));
                 break;
-
-            case ConstantBox.WRONG_PASSWORD:
-                Snackbar.make(linLayout, R.string.wrong_password_text, Snackbar.LENGTH_SHORT).show();
-                break;
-
-            case ConstantBox.WRONG_LOGIN:
-                Snackbar.make(linLayout, R.string.wrong_login_text, Snackbar.LENGTH_SHORT).show();
-                break;
-
-            case ConstantBox.ERROR:
-                Snackbar.make(linLayout, R.string.unknown_error, Snackbar.LENGTH_SHORT).show();
+            case ConstantBox.LOGIN_IS_BUSY:
+                Snackbar.make(linLayout, R.string.login_is_busy, Snackbar.LENGTH_SHORT).show();
                 break;
         }
-
-
     }
 }

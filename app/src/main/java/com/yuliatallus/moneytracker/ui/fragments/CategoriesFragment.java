@@ -36,7 +36,7 @@ public class CategoriesFragment extends Fragment {
 
     @Click(R.id.fab)
     void fabClicked() {
-        if (getView() != null && floatingActionButton.isPressed()) {
+        if (getView() != null) {
             Snackbar.make(getView(), R.string.nice_text, Snackbar.LENGTH_SHORT).show();
         }
     }
@@ -46,7 +46,6 @@ public class CategoriesFragment extends Fragment {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         categoriesRecyclerView.setLayoutManager(linearLayoutManager);
-        fabClicked();
         getActivity().setTitle(getString(R.string.nav_drawer_categories));
         loadData();
     }

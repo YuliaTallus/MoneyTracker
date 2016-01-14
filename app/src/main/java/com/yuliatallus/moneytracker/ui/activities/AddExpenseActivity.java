@@ -1,14 +1,15 @@
 package com.yuliatallus.moneytracker.ui.activities;
 
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
-import android.widget.Toast;
 
 import com.activeandroid.query.Select;
 import com.yuliatallus.moneytracker.R;
@@ -30,6 +31,9 @@ import java.util.List;
 public class AddExpenseActivity extends AppCompatActivity {
 
     Categories categoryToExpense;
+
+    @ViewById(R.id.act_add_exp_layout)
+    LinearLayout linLayout;
 
     @ViewById(R.id.spinner)
     Spinner spinner;
@@ -62,10 +66,6 @@ public class AddExpenseActivity extends AppCompatActivity {
         setTitle(R.string.add_expense);
         SpinnerAdapter adapter = new MySpinAdapter(this, getDataList());
         spinner.setAdapter(adapter);
-        if (floatingActionButton.isPressed()){
-            buttonClicked();
-        }
-
     }
 
     @Click(R.id.fab)
@@ -75,7 +75,7 @@ public class AddExpenseActivity extends AppCompatActivity {
         String dateToExpense;
         if (sumToExpense.equals("")||
                 noteToExpense.equals("")){
-            Toast.makeText(this, "Fill all fields", Toast.LENGTH_SHORT).show();
+            Snackbar.make(linLayout, R.string.fill_fields, Snackbar.LENGTH_SHORT).show();
         }else{
             spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 

@@ -3,22 +3,23 @@ package com.yuliatallus.moneytracker.database;
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
+import com.yuliatallus.moneytracker.util.ConstantBox;
 
 import java.util.List;
 
-@Table(name = "Expenses")
+@Table(name = ConstantBox.EXPENSES)
 public class Expenses extends Model{
 
-    @Column(name = "price")
+    @Column(name = ConstantBox.PRICE)
     public String price;
 
-    @Column(name = "name")
+    @Column(name = ConstantBox.NAME)
     public String name;
 
-    @Column(name = "date")
+    @Column(name = ConstantBox.DATE)
     public String date;
 
-    @Column(name = "category")
+    @Column(name = ConstantBox.CATEGORY)
     public Categories category;
 
     public Expenses(){
@@ -34,6 +35,6 @@ public class Expenses extends Model{
     }
 
     public List<Expenses> expenses(){
-        return getMany(Expenses.class, "category");
+        return getMany(Expenses.class, ConstantBox.CATEGORY);
     }
 }

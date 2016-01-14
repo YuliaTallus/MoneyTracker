@@ -4,17 +4,21 @@
         android:checkableBehavior="single">
         <item
             android:id="@+id/drawer_expenses"
+            android:icon="@drawable/ic_account_balance_wallet"
             android:title="@string/nav_drawer_expenses"
             android:checked="true" />
         <item
             android:id="@+id/drawer_categories"
+            android:icon="@drawable/ic_bookmark"
             android:title="@string/nav_drawer_categories" />
         <item
             android:id="@+id/drawer_statistics"
+            android:icon="@drawable/ic_trending_up"
             android:title="@string/nav_drawer_statistics"/>
         <item
             android:id="@+id/drawer_settings"
-            android:title="@string/nav_drawer_settings" />
+            android:title="@string/nav_drawer_settings"
+            android:icon="@drawable/ic_settings"/>
     </group>
 
 </menu>
