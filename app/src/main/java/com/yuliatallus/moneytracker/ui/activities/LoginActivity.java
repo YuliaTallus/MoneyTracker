@@ -47,7 +47,12 @@ public class LoginActivity extends AppCompatActivity{
         if (NetworkStatusChecker.isNetworkAvailable(this)){
             String login = editLogin.getText().toString();
             String password = editPassword.getText().toString();
-            login(login,password);
+            if (login.length()<5||password.length()<5){
+                Snackbar.make(linLayout, R.string.five_symbol_text, Snackbar.LENGTH_SHORT).show();
+            }
+            else {
+                login(login,password);
+            }
         }
         else{
             Snackbar.make(linLayout, R.string.no_connection_text, Snackbar.LENGTH_SHORT).show();
