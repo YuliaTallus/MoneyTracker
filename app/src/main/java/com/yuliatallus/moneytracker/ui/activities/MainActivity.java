@@ -17,6 +17,7 @@ import com.yuliatallus.moneytracker.MoneyTrackerApplication;
 import com.yuliatallus.moneytracker.database.Categories;
 import com.yuliatallus.moneytracker.rest.RestService;
 import com.yuliatallus.moneytracker.rest.model.CreateCategory;
+import com.yuliatallus.moneytracker.sync.TrackerSyncAdapter;
 import com.yuliatallus.moneytracker.ui.fragments.CategoriesFragment_;
 import com.yuliatallus.moneytracker.ui.fragments.ExpensesFragment_;
 import com.yuliatallus.moneytracker.R;
@@ -51,9 +52,12 @@ public class MainActivity extends AppCompatActivity {
     void ready() {
         setupToolbar();
         setupDrawer();
+
         initCategories();
         addCategory(getDataList());
         getSupportFragmentManager().beginTransaction().replace(R.id.main_container, new ExpensesFragment_()).commit();
+
+        TrackerSyncAdapter.initializeSyncAdapter(this);
 
     }
 
