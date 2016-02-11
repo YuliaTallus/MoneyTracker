@@ -2,6 +2,7 @@ package com.yuliatallus.moneytracker.rest;
 
 import com.yuliatallus.moneytracker.MoneyTrackerApplication;
 import com.yuliatallus.moneytracker.rest.model.CreateCategory;
+import com.yuliatallus.moneytracker.rest.model.SyncCategoryModel;
 import com.yuliatallus.moneytracker.rest.model.UserLoginModel;
 import com.yuliatallus.moneytracker.rest.model.UserRegistrationModel;
 
@@ -22,7 +23,11 @@ public class RestService {
         return restClient.getLoginUserApi().loginUser(login, password);
     }
 
-    public CreateCategory createCategory(String title){
+    public CreateCategory createCat(String title){
         return restClient.getCreateCategoryApi().createCategory(title, MoneyTrackerApplication.getAuthKey());
+    }
+
+    public SyncCategoryModel syncCategory(String data){
+        return restClient.getSyncCategoryApi().syncCategory(data, MoneyTrackerApplication.getAuthKey());
     }
 }

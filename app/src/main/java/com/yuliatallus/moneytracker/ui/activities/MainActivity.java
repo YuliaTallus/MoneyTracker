@@ -64,16 +64,16 @@ public class MainActivity extends AppCompatActivity {
     private void initCategories(){
         Categories catEntertainment = new Categories("Развлечения");
         catEntertainment.save();
-        Categories catBooks = new Categories("Книги");
-        catBooks.save();
-        Categories catEducation = new Categories("Образование");
-        catEducation.save();
-        Categories catPhone = new Categories("Телефон");
-        catPhone.save();
-        Categories catFood = new Categories("Еда");
-        catFood .save();
-        Categories catClothes = new Categories("Одежда");
-        catClothes.save();
+//        Categories catBooks = new Categories("Книги");
+//        catBooks.save();
+//        Categories catEducation = new Categories("Образование");
+//        catEducation.save();
+//        Categories catPhone = new Categories("Телефон");
+//        catPhone.save();
+//        Categories catFood = new Categories("Еда");
+//        catFood .save();
+//        Categories catClothes = new Categories("Одежда");
+//        catClothes.save();
     }
 
     @Override
@@ -157,13 +157,13 @@ public class MainActivity extends AppCompatActivity {
     void addCategory(List<Categories> list){
         RestService restService = new RestService();
         for (Categories cat: list){
-            CreateCategory createCategory = restService.createCategory(cat.name);
+            CreateCategory createCategory = restService.createCat(cat.name);
             switch (createCategory.getStatus()){
 
                 case ConstantBox.SUCCESS:
                     Log.d(TAG, "Status: " + createCategory.getStatus() +
                             ", Title: " + createCategory.getData().getTitle() +
-                            ", Id: " + createCategory.getData().getId() +
+                            ", Id: " + createCategory.getData().getId() + "   " +
                             MoneyTrackerApplication.getAuthKey());
                     break;
 
