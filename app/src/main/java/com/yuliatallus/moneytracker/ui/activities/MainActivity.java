@@ -163,12 +163,16 @@ public class MainActivity extends AppCompatActivity {
                 case ConstantBox.SUCCESS:
                     Log.d(TAG, "Status: " + createCategory.getStatus() +
                             ", Title: " + createCategory.getData().getTitle() +
-                            ", Id: " + createCategory.getData().getId() + "   " +
+                            ", Id: " + createCategory.getData().getId() + " token " +
                             MoneyTrackerApplication.getAuthKey());
                     break;
 
                 case ConstantBox.UNAUTHORIZED:
                     startActivity(new Intent(this, LoginActivity_.class));
+                    break;
+
+                case ConstantBox.ERROR:
+                    Log.d(TAG, "Ощибка при добавлении категории");
                     break;
             }
 
