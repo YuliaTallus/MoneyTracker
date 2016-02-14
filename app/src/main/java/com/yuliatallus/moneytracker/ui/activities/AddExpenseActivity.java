@@ -1,9 +1,12 @@
 package com.yuliatallus.moneytracker.ui.activities;
 
+import android.database.Cursor;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.widget.SimpleCursorAdapter;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
@@ -16,6 +19,8 @@ import com.yuliatallus.moneytracker.R;
 import com.yuliatallus.moneytracker.adapters.MySpinAdapter;
 import com.yuliatallus.moneytracker.database.Categories;
 import com.yuliatallus.moneytracker.database.Expenses;
+import com.yuliatallus.moneytracker.rest.RestService;
+import com.yuliatallus.moneytracker.rest.model.CreateExpenseModel;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
@@ -29,6 +34,8 @@ import java.util.List;
 
 @EActivity(R.layout.activity_add_expense)
 public class AddExpenseActivity extends AppCompatActivity {
+
+    private static final String TAG = AddExpenseActivity.class.getSimpleName();
 
     Categories categoryToExpense;
 
@@ -61,6 +68,8 @@ public class AddExpenseActivity extends AppCompatActivity {
     @AfterViews
     void ready() {
         setSupportActionBar(toolbar);
+
+
         if (getSupportActionBar() != null)
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setTitle(R.string.add_expense);
@@ -91,12 +100,23 @@ public class AddExpenseActivity extends AppCompatActivity {
             });
 
             Date date = new Date();
-            SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd/MM/yyyy");
+            SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
             dateToExpense = DATE_FORMAT.format(date);
+
+//            Log.d("CATEGORY",categoryToExpense.name + " " + categoryToExpense.getId());
 
 
             Expenses newExpense = new Expenses(sumToExpense, noteToExpense, dateToExpense, categoryToExpense);
             newExpense.save();
+
+//            RestService restService = new RestService();
+//            CreateExpenseModel createExpenseModel = restService.createExpense(newExpense.price,
+//                    newExpense.name,
+//                    newExpense.category.getId().toString(),
+//                    newExpense.date );
+//
+//            Log.d(TAG, createExpenseModel.getStatus()+ "!!!");
+
             back();
         }
 

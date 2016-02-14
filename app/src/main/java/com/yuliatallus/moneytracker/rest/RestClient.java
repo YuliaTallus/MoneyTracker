@@ -1,9 +1,11 @@
 package com.yuliatallus.moneytracker.rest;
 
 import com.yuliatallus.moneytracker.rest.api.CreateCategoryApi;
+import com.yuliatallus.moneytracker.rest.api.CreateExpenseApi;
 import com.yuliatallus.moneytracker.rest.api.LoginUserApi;
 import com.yuliatallus.moneytracker.rest.api.RegisterUserApi;
 import com.yuliatallus.moneytracker.rest.api.SyncCategoryApi;
+import com.yuliatallus.moneytracker.rest.api.SyncExpensesApi;
 
 import retrofit.RestAdapter;
 
@@ -13,7 +15,10 @@ public class RestClient {
     private RegisterUserApi registerUserApi;
     private LoginUserApi loginUserApi;
     private CreateCategoryApi createCategoryApi;
+    private CreateExpenseApi createExpenseApi;
     private SyncCategoryApi syncCategoryApi;
+    private SyncExpensesApi syncExpensesApi;
+
 
     public RestClient(){
         RestAdapter restAdapter = new RestAdapter.Builder()
@@ -24,7 +29,9 @@ public class RestClient {
         registerUserApi = restAdapter.create(RegisterUserApi.class);
         loginUserApi = restAdapter.create(LoginUserApi.class);
         createCategoryApi = restAdapter.create(CreateCategoryApi.class);
+        createExpenseApi = restAdapter.create(CreateExpenseApi.class);
         syncCategoryApi = restAdapter.create(SyncCategoryApi.class);
+        syncExpensesApi = restAdapter.create(SyncExpensesApi.class);
     }
 
     public RegisterUserApi getRegisterUserApi() {
@@ -39,7 +46,16 @@ public class RestClient {
         return createCategoryApi;
     }
 
+    public CreateExpenseApi getCreateExpenseApi() {
+        return createExpenseApi;
+    }
+
     public SyncCategoryApi getSyncCategoryApi(){
         return syncCategoryApi;
     }
+
+    public SyncExpensesApi getSyncExpensesApi(){
+        return syncExpensesApi;
+    }
+
 }

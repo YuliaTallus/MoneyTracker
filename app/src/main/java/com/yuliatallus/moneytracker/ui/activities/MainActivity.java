@@ -16,7 +16,7 @@ import com.activeandroid.query.Select;
 import com.yuliatallus.moneytracker.MoneyTrackerApplication;
 import com.yuliatallus.moneytracker.database.Categories;
 import com.yuliatallus.moneytracker.rest.RestService;
-import com.yuliatallus.moneytracker.rest.model.CreateCategory;
+import com.yuliatallus.moneytracker.rest.model.CreateCategoryModel;
 import com.yuliatallus.moneytracker.sync.TrackerSyncAdapter;
 import com.yuliatallus.moneytracker.ui.fragments.CategoriesFragment_;
 import com.yuliatallus.moneytracker.ui.fragments.ExpensesFragment_;
@@ -55,6 +55,8 @@ public class MainActivity extends AppCompatActivity {
 
         initCategories();
         addCategory(getDataList());
+
+        Log.d(TAG, MoneyTrackerApplication.getAuthKey());
         getSupportFragmentManager().beginTransaction().replace(R.id.main_container, new ExpensesFragment_()).commit();
 
         TrackerSyncAdapter.initializeSyncAdapter(this);
@@ -64,16 +66,16 @@ public class MainActivity extends AppCompatActivity {
     private void initCategories(){
         Categories catEntertainment = new Categories("Развлечения");
         catEntertainment.save();
-//        Categories catBooks = new Categories("Книги");
-//        catBooks.save();
-//        Categories catEducation = new Categories("Образование");
-//        catEducation.save();
-//        Categories catPhone = new Categories("Телефон");
-//        catPhone.save();
-//        Categories catFood = new Categories("Еда");
-//        catFood .save();
-//        Categories catClothes = new Categories("Одежда");
-//        catClothes.save();
+        Categories catBooks = new Categories("Книги");
+        catBooks.save();
+        Categories catEducation = new Categories("Образование");
+        catEducation.save();
+        Categories catPhone = new Categories("Телефон");
+        catPhone.save();
+        Categories catFood = new Categories("Еда");
+        catFood .save();
+        Categories catClothes = new Categories("Одежда");
+        catClothes.save();
     }
 
     @Override
@@ -157,14 +159,13 @@ public class MainActivity extends AppCompatActivity {
     void addCategory(List<Categories> list){
         RestService restService = new RestService();
         for (Categories cat: list){
-            CreateCategory createCategory = restService.createCat(cat.name);
-            switch (createCategory.getStatus()){
+            CreateCategoryModel createCategoryModel = restService.createCat(cat.name);
+            switch (createCategoryModel.getStatus()){
 
                 case ConstantBox.SUCCESS:
-                    Log.d(TAG, "Status: " + createCategory.getStatus() +
-                            ", Title: " + createCategory.getData().getTitle() +
-                            ", Id: " + createCategory.getData().getId() + " token " +
-                            MoneyTrackerApplication.getAuthKey());
+                    Log.d(TAG, "Status: " + createCategoryModel.getStatus() +
+                            ", Title: " + createCategoryModel.getData().getTitle() +
+                            ", Id: " + createCategoryModel.getData().getId());
                     break;
 
                 case ConstantBox.UNAUTHORIZED:
@@ -172,7 +173,7 @@ public class MainActivity extends AppCompatActivity {
                     break;
 
                 case ConstantBox.ERROR:
-                    Log.d(TAG, "Ощибка при добавлении категории");
+                    Log.d(TAG, "Ошибка при добавлении категории");
                     break;
             }
 

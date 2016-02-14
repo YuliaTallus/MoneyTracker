@@ -1,8 +1,10 @@
 package com.yuliatallus.moneytracker.rest;
 
 import com.yuliatallus.moneytracker.MoneyTrackerApplication;
-import com.yuliatallus.moneytracker.rest.model.CreateCategory;
+import com.yuliatallus.moneytracker.rest.model.CreateCategoryModel;
+import com.yuliatallus.moneytracker.rest.model.CreateExpenseModel;
 import com.yuliatallus.moneytracker.rest.model.SyncCategoryModel;
+import com.yuliatallus.moneytracker.rest.model.SyncExpensesModel;
 import com.yuliatallus.moneytracker.rest.model.UserLoginModel;
 import com.yuliatallus.moneytracker.rest.model.UserRegistrationModel;
 
@@ -23,11 +25,19 @@ public class RestService {
         return restClient.getLoginUserApi().loginUser(login, password);
     }
 
-    public CreateCategory createCat(String title){
+    public CreateCategoryModel createCat(String title){
         return restClient.getCreateCategoryApi().createCategory(title, MoneyTrackerApplication.getAuthKey());
+    }
+
+    public CreateExpenseModel createExpense(String sum, String comment, String categoryId, String date){
+        return restClient.getCreateExpenseApi().createExpense(sum, comment, categoryId, date);
     }
 
     public SyncCategoryModel syncCategory(String data){
         return restClient.getSyncCategoryApi().syncCategory(data, MoneyTrackerApplication.getAuthKey());
+    }
+
+    public SyncExpensesModel syncExpense(String data){
+        return restClient.getSyncExpensesApi().syncExpense(data, MoneyTrackerApplication.getAuthKey());
     }
 }

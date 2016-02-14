@@ -14,12 +14,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CategoriesSynchronizing {
+    private static final String TAG  = CategoriesSynchronizing.class.getSimpleName();
 
     public static void synchronizeCategories(){
 
         RestService restService = new RestService();
         SyncCategoryModel syncCategoryModel = restService.syncCategory(getDataForSync());
-        Log.d(TrackerSyncAdapter.TAG, syncCategoryModel.getStatus());
+        Log.d(TAG, syncCategoryModel.getStatus());
 
     }
 

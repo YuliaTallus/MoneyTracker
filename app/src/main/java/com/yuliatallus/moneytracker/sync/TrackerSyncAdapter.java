@@ -17,7 +17,7 @@ import com.yuliatallus.moneytracker.R;
 
 public class TrackerSyncAdapter extends AbstractThreadedSyncAdapter {
 
-    public static final String TAG  = TrackerSyncAdapter.class.getSimpleName();
+    private static final String TAG  = TrackerSyncAdapter.class.getSimpleName();
 
     public TrackerSyncAdapter(Context context, boolean autoInitialize) {
         super(context, autoInitialize);
@@ -25,9 +25,10 @@ public class TrackerSyncAdapter extends AbstractThreadedSyncAdapter {
 
     @Override
     public void onPerformSync(Account account, Bundle extras, String authority, ContentProviderClient provider, SyncResult syncResult) {
-        Log.e(TAG, "Synchronizing!!!");
+        Log.d(TAG, "Synchronizing!!!");
 
-       CategoriesSynchronizing.synchronizeCategories();
+        CategoriesSynchronizing.synchronizeCategories();
+        ExpensesSynchronizing.synchronizeExpenses();
     }
 
     public static void syncImmediately(Context context){
