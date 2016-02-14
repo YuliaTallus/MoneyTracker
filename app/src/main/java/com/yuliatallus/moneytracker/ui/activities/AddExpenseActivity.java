@@ -71,7 +71,6 @@ public class AddExpenseActivity extends AppCompatActivity {
         if (getSupportActionBar() != null)
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setTitle(R.string.add_expense);
-        this.spinner = (Spinner)findViewById(R.id.spinner);
         SpinnerAdapter adapter = new MySpinAdapter(this, getDataList());
         spinner.setAdapter(adapter);
     }

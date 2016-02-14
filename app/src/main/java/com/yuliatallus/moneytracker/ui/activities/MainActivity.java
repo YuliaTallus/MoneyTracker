@@ -54,19 +54,12 @@ public class MainActivity extends AppCompatActivity {
         setupDrawer();
 
         initCategories();
-        //addCategory(getDataList());
+        addCategory(getDataList());
 
         Log.d(TAG, MoneyTrackerApplication.getAuthKey());
         getSupportFragmentManager().beginTransaction().replace(R.id.main_container, new ExpensesFragment_()).commit();
 
-        //TrackerSyncAdapter.initializeSyncAdapter(this);
-
-        Categories myCat = new  Select().from(Categories.class)
-                .where("name = ?", "Развлечения")
-                .orderBy("RANDOM()")
-                .executeSingle();
-
-        Log.e(TAG, myCat.name + "  " + myCat.getId());
+        TrackerSyncAdapter.initializeSyncAdapter(this);
 
     }
 
