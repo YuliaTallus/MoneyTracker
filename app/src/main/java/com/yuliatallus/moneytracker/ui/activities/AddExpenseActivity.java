@@ -1,9 +1,7 @@
 package com.yuliatallus.moneytracker.ui.activities;
 
-import android.database.Cursor;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v4.widget.SimpleCursorAdapter;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -73,6 +71,7 @@ public class AddExpenseActivity extends AppCompatActivity {
         if (getSupportActionBar() != null)
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setTitle(R.string.add_expense);
+        this.spinner = (Spinner)findViewById(R.id.spinner);
         SpinnerAdapter adapter = new MySpinAdapter(this, getDataList());
         spinner.setAdapter(adapter);
     }
@@ -90,7 +89,13 @@ public class AddExpenseActivity extends AppCompatActivity {
 
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                    categoryToExpense = (Categories)spinner.getItemAtPosition(position);
+                    categoryToExpense = (Categories)spinner.getSelectedItem();
+//                    categoryToExpense = new  Select().from(Categories.class)
+//                            .where("name = ?", spinner.getItemAtPosition(position).toString())
+//                            .orderBy("RANDOM()")
+//                            .executeSingle();
+//                    Log.e(TAG, "CATEGORY TESTING!!!" + spinner.getItemAtPosition(position).toString());
+
                 }
 
                 @Override
@@ -103,7 +108,7 @@ public class AddExpenseActivity extends AppCompatActivity {
             SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
             dateToExpense = DATE_FORMAT.format(date);
 
-//            Log.d("CATEGORY",categoryToExpense.name + " " + categoryToExpense.getId());
+            Log.d("CATEGORY",categoryToExpense.name + " " + categoryToExpense.getId());
 
 
             Expenses newExpense = new Expenses(sumToExpense, noteToExpense, dateToExpense, categoryToExpense);
