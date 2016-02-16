@@ -28,20 +28,20 @@ public class RestService {
         return restClient.getLoginUserApi().loginUser(login, password);
     }
 
-    public CreateCategoryModel createCat(String title){
-        return restClient.getCreateCategoryApi().createCategory(title, MoneyTrackerApplication.getAuthKey());
+    public CreateCategoryModel createCat(Context context, String title){
+        return restClient.getCreateCategoryApi().createCategory(MoneyTrackerApplication.getGoogleKey(context),title, MoneyTrackerApplication.getAuthKey());
     }
 
-    public CreateExpenseModel createExpense(String sum, String comment, String categoryId, String date){
-        return restClient.getCreateExpenseApi().createExpense(sum, comment, categoryId, date);
+    public CreateExpenseModel createExpense(Context context,String sum, String comment, String categoryId, String date){
+        return restClient.getCreateExpenseApi().createExpense(MoneyTrackerApplication.getGoogleKey(context),sum, comment, categoryId, date);
     }
 
-    public SyncCategoryModel syncCategory(String data){
-        return restClient.getSyncCategoryApi().syncCategory(data, MoneyTrackerApplication.getAuthKey());
+    public SyncCategoryModel syncCategory(Context context, String data){
+        return restClient.getSyncCategoryApi().syncCategory(MoneyTrackerApplication.getGoogleKey(context),data, MoneyTrackerApplication.getAuthKey());
     }
 
-    public SyncExpensesModel syncExpense(String data){
-        return restClient.getSyncExpensesApi().syncExpense(data, MoneyTrackerApplication.getAuthKey());
+    public SyncExpensesModel syncExpense(Context context, String data){
+        return restClient.getSyncExpensesApi().syncExpense(MoneyTrackerApplication.getGoogleKey(context),data, MoneyTrackerApplication.getAuthKey());
     }
 
     public GoogleJsonModel getJsonModel(Context context){

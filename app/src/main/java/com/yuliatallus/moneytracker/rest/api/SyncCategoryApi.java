@@ -9,6 +9,8 @@ import retrofit.http.Query;
 public interface SyncCategoryApi {
 
     @GET("/categories/synch")
-    SyncCategoryModel syncCategory(@Query("data") String data,
-                                   @Query("auth_token") String token);
+    SyncCategoryModel syncCategory(
+            @Query("google_token") String gToken,
+            @Query("data") String data,
+            @Query("auth_token") String token);
 }

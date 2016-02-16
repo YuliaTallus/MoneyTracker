@@ -119,14 +119,6 @@ public class LoginActivity extends AppCompatActivity{
 
         if (!MoneyTrackerApplication.getGoogleKey(this).equalsIgnoreCase("2")){
 
-//            RestService restService = new RestService();
-//            GoogleJsonModel googleJsonModel = restService.getJsonModel(this);
-//
-//            Log.e("EMAIL", googleJsonModel.getEmail() );
-//            Log.e("FAMILYNAME", googleJsonModel.getFamilyName() );
-//            Log.e("NAME", googleJsonModel.getName() );
-//            Log.e("LINK", googleJsonModel.getLink() );
-
             Intent regIntent = new Intent(LoginActivity.this, MainActivity_.class);
             startActivity(regIntent);
             finish();

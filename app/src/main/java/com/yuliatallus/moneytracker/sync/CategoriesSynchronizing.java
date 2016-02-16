@@ -1,6 +1,7 @@
 package com.yuliatallus.moneytracker.sync;
 
 
+import android.content.Context;
 import android.util.Log;
 
 import com.activeandroid.query.Select;
@@ -16,10 +17,10 @@ import java.util.List;
 public class CategoriesSynchronizing {
     private static final String TAG  = CategoriesSynchronizing.class.getSimpleName();
 
-    public static void synchronizeCategories(){
+    public static void synchronizeCategories(Context context){
 
         RestService restService = new RestService();
-        SyncCategoryModel syncCategoryModel = restService.syncCategory(getDataForSync());
+        SyncCategoryModel syncCategoryModel = restService.syncCategory(context,getDataForSync());
         Log.d(TAG, syncCategoryModel.getStatus());
 
     }

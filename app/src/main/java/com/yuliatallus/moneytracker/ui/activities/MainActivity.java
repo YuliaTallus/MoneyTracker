@@ -175,7 +175,7 @@ public class MainActivity extends AppCompatActivity {
     void addCategory(List<Categories> list){
         RestService restService = new RestService();
         for (Categories cat: list){
-            CreateCategoryModel createCategoryModel = restService.createCat(cat.name);
+            CreateCategoryModel createCategoryModel = restService.createCat(this, cat.name);
             switch (createCategoryModel.getStatus()){
 
                 case ConstantBox.SUCCESS:
@@ -226,7 +226,7 @@ public class MainActivity extends AppCompatActivity {
 
         ImageView i = (ImageView)findViewById(R.id.profile_picture);
         i.setImageBitmap(bitmap);
-        
+
     }
 
     @UiThread
