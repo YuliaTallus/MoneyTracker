@@ -5,6 +5,7 @@
     <string name="nav_drawer_categories">Категории</string>
     <string name="nav_drawer_statistics">Статистика</string>
     <string name="nav_drawer_settings">Настройки</string>
+    <string name="search_title">Search</string>
     <string name="name">Yiliya Shestakova</string>
     <string name="email">yushestakova@icloud.com</string>
     <string name="name_text">Name</string>

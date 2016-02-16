@@ -19,5 +19,6 @@ public final class ConstantBox {
     public static final String EMAIL_SCOPE = "https://www.googleapis.com/auth/userinfo.email";
     public static final String SCOPES = G_PLUS_SCOPE + " " + USERINFO_SCOPE + " " + EMAIL_SCOPE;
     public static final String LOG_TAG_TOKEN = "GOOGLE_TOKEN";
+    public static final String FILTER_ID = "filterID";
 
 }

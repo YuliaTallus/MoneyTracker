@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
         setupDrawer();
         getInfoForDrawer();
 
-        //initCategories();
+        initCategories();
         //addCategory(getDataList());
 
         Log.d(TAG, MoneyTrackerApplication.getAuthKey());

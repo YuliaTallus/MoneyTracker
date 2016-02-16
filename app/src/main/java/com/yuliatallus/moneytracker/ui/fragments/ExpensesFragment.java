@@ -10,6 +10,9 @@ import android.support.v4.content.Loader;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.SearchView;
 
 import com.activeandroid.query.Select;
 import com.yuliatallus.moneytracker.adapters.ExpensesAdapter;
@@ -19,16 +22,25 @@ import com.yuliatallus.moneytracker.ui.activities.AddExpenseActivity_;
 import com.yuliatallus.moneytracker.R;
 import com.yuliatallus.moneytracker.database.Expenses;
 import com.yuliatallus.moneytracker.ui.activities.MainActivity_;
+import com.yuliatallus.moneytracker.util.ConstantBox;
 
 import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.Background;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EFragment;
+import org.androidannotations.annotations.OptionsMenu;
+import org.androidannotations.annotations.OptionsMenuItem;
 import org.androidannotations.annotations.ViewById;
+import org.androidannotations.api.BackgroundExecutor;
 
 import java.util.List;
 
 @EFragment(R.layout.expenses_fragment)
+@OptionsMenu(R.menu.search_menu)
 public class ExpensesFragment extends Fragment {
+
+    private static final String TAG =ExpensesFragment.class.getSimpleName();
+
 
     @ViewById(R.id.context_recyclerview)
     RecyclerView expensesRecyclerView;
@@ -36,6 +48,8 @@ public class ExpensesFragment extends Fragment {
     @ViewById(R.id.fab)
     FloatingActionButton floatingActionButton;
 
+    @OptionsMenuItem(R.id.search_action)
+    MenuItem menuItem;
 
 
     @Click(R.id.fab)
@@ -56,17 +70,44 @@ public class ExpensesFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        loadData();
+        loadData("");
     }
 
-    private  void loadData(){
+    @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        super.onPrepareOptionsMenu(menu);
+        SearchView searchView = (SearchView)menuItem.getActionView();
+        searchView.setQueryHint(getString(R.string.search_title));
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                Log.d(TAG, "Full Query: " + query);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                Log.d(TAG, "Current text: " + newText);
+                BackgroundExecutor.cancelAll(ConstantBox.FILTER_ID, true);
+                delayedQuery(newText);
+                return false;
+            }
+        });
+    }
+
+    @Background(delay = 700, id = ConstantBox.FILTER_ID)
+    public void delayedQuery(String filter){
+        loadData(filter);
+    }
+
+    private  void loadData(final String filter){
         getLoaderManager().restartLoader(0, null, new LoaderManager.LoaderCallbacks<List<Expenses>>() {
             @Override
             public Loader<List<Expenses>> onCreateLoader(int id, Bundle args) {
                 final android.support.v4.content.AsyncTaskLoader<List<Expenses>> loader = new AsyncTaskLoader<List<Expenses>>(getActivity()) {
                     @Override
                     public List<Expenses> loadInBackground() {
-                        return getDataList();
+                        return Expenses.expenses(filter);
                     }
                 };
 
@@ -85,13 +126,5 @@ public class ExpensesFragment extends Fragment {
             }
         });
     }
-
-    private List<Expenses> getDataList(){
-        return  new Select()
-                .from(Expenses.class)
-                .execute();
-    }
-
-
 
 }
