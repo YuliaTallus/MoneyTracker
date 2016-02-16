@@ -15,6 +15,7 @@ import com.yuliatallus.moneytracker.MoneyTrackerApplication;
 import com.yuliatallus.moneytracker.R;
 import com.yuliatallus.moneytracker.rest.RestClient;
 import com.yuliatallus.moneytracker.rest.model.GoogleTokenStatusModel;
+import com.yuliatallus.moneytracker.util.ConstantBox;
 import com.yuliatallus.moneytracker.util.NetworkStatusChecker;
 
 import org.androidannotations.annotations.AfterViews;
@@ -30,6 +31,9 @@ import retrofit.client.Response;
 
 @EActivity(R.layout.activity_splash)
 public class SplashActivity extends AppCompatActivity{
+
+    private static final String TAG = LoginActivity.class.getSimpleName();
+
     private String gToken;
     private RestClient restClient;
 
@@ -70,7 +74,7 @@ public class SplashActivity extends AppCompatActivity{
 
             @Override
             public void success(GoogleTokenStatusModel googleTokenStatusModel, Response response) {
-                Log.e("LOG_TAG", googleTokenStatusModel.getStatus());
+                Log.e(TAG, googleTokenStatusModel.getStatus());
                 if (googleTokenStatusModel.getStatus().equalsIgnoreCase("error")){
                     doubleTokenExc();
                 }
@@ -106,19 +110,19 @@ public class SplashActivity extends AppCompatActivity{
         final String accountName = data.getStringExtra(AccountManager.KEY_ACCOUNT_NAME);
         String token = null;
         try {
-            token = GoogleAuthUtil.getToken(SplashActivity.this, accountName, LoginActivity.SCOPES);
+            token = GoogleAuthUtil.getToken(SplashActivity.this, accountName, ConstantBox.SCOPES);
         }catch(UserRecoverableAuthException userAuthEx){
             startActivityForResult(userAuthEx.getIntent(), 10);
         } catch (IOException ioEx) {
             ioEx.printStackTrace();
         } catch (GoogleAuthException fatalAuthEx) {
             fatalAuthEx.printStackTrace();
-            Log.e("LOG_TAG", "Fatal Exception " + fatalAuthEx.getLocalizedMessage());
+            Log.e(TAG, "Fatal Exception " + fatalAuthEx.getLocalizedMessage());
         }
 
         MoneyTrackerApplication.setGoogleToken(this, token);
 
-        Log.e("LOG_TAG_TOKEN", " GOOGLE_TOKEN + " + MoneyTrackerApplication.getGoogleKey(this));
+        Log.e(ConstantBox.LOG_TAG_TOKEN, " GOOGLE_TOKEN + " + MoneyTrackerApplication.getGoogleKey(this));
 
         if (!MoneyTrackerApplication.getGoogleKey(this).equalsIgnoreCase("2")){
             Intent regIntent = new Intent(SplashActivity.this, MainActivity_.class);

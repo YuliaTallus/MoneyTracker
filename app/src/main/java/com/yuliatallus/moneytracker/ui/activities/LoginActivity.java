@@ -35,17 +35,6 @@ public class LoginActivity extends AppCompatActivity{
 
     private static final String TAG = LoginActivity.class.getSimpleName();
 
-    private final static String G_PLUS_SCOPE =
-            "oauth2:https://www.googleapis.com/auth/plus.me";
-    private final static String USERINFO_SCOPE =
-            "https://www.googleapis.com/auth/userinfo.profile";
-    private final static String EMAIL_SCOPE =
-            "https://www.googleapis.com/auth/userinfo.email";
-    public final static String SCOPES = G_PLUS_SCOPE + " " + USERINFO_SCOPE + " " + EMAIL_SCOPE;
-
-
-
-
     @ViewById(R.id.login_activity)
     LinearLayout linLayout;
 
@@ -103,7 +92,7 @@ public class LoginActivity extends AppCompatActivity{
         final String accountName = data.getStringExtra(AccountManager.KEY_ACCOUNT_NAME);
         String token = null;
         try {
-            token = GoogleAuthUtil.getToken(LoginActivity.this, accountName, SCOPES);
+            token = GoogleAuthUtil.getToken(LoginActivity.this, accountName, ConstantBox.SCOPES);
         }catch(UserRecoverableAuthException userAuthEx){
             startActivityForResult(userAuthEx.getIntent(), 10);
         } catch (IOException ioEx) {
@@ -115,7 +104,7 @@ public class LoginActivity extends AppCompatActivity{
 
         MoneyTrackerApplication.setGoogleToken(this, token);
 
-        Log.e("LOG_TAG_TOKEN", " GOOGLE_TOKEN + " + MoneyTrackerApplication.getGoogleKey(this));
+        Log.e(ConstantBox.LOG_TAG_TOKEN, " GOOGLE_TOKEN + " + MoneyTrackerApplication.getGoogleKey(this));
 
         if (!MoneyTrackerApplication.getGoogleKey(this).equalsIgnoreCase("2")){
 
