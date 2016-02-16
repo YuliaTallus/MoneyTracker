@@ -1,17 +1,19 @@
 package com.yuliatallus.moneytracker.rest.model;
 
-
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class CreateCategory {
+import java.util.ArrayList;
+import java.util.List;
+
+public class SyncExpensesModel {
 
     @SerializedName("status")
     @Expose
     private String status;
     @SerializedName("data")
     @Expose
-    private Data data;
+    private List<Data> data = new ArrayList<>();
 
     /**
      *
@@ -36,7 +38,7 @@ public class CreateCategory {
      * @return
      * The data
      */
-    public Data getData() {
+    public List<Data> getData() {
         return data;
     }
 
@@ -45,7 +47,7 @@ public class CreateCategory {
      * @param data
      * The data
      */
-    public void setData(Data data) {
+    public void setData(List<Data> data) {
         this.data = data;
     }
 }

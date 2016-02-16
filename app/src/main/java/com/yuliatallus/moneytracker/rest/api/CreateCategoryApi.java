@@ -1,7 +1,7 @@
 package com.yuliatallus.moneytracker.rest.api;
 
 
-import com.yuliatallus.moneytracker.rest.model.CreateCategory;
+import com.yuliatallus.moneytracker.rest.model.CreateCategoryModel;
 
 import retrofit.http.GET;
 import retrofit.http.Query;
@@ -9,6 +9,6 @@ import retrofit.http.Query;
 public interface CreateCategoryApi {
 
     @GET("/categories/add")
-    CreateCategory createCategory(@Query("title") String title,
+    CreateCategoryModel createCategory(@Query("title") String title,
                                   @Query("auth_token") String token);
 }

@@ -19,4 +19,9 @@ public class Categories extends Model {
         super();
         this.name = name;
     }
+
+    @Override
+    public String toString() {
+        return this.name;
+    }
 }

@@ -16,7 +16,8 @@ import com.activeandroid.query.Select;
 import com.yuliatallus.moneytracker.MoneyTrackerApplication;
 import com.yuliatallus.moneytracker.database.Categories;
 import com.yuliatallus.moneytracker.rest.RestService;
-import com.yuliatallus.moneytracker.rest.model.CreateCategory;
+import com.yuliatallus.moneytracker.rest.model.CreateCategoryModel;
+import com.yuliatallus.moneytracker.sync.TrackerSyncAdapter;
 import com.yuliatallus.moneytracker.ui.fragments.CategoriesFragment_;
 import com.yuliatallus.moneytracker.ui.fragments.ExpensesFragment_;
 import com.yuliatallus.moneytracker.R;
@@ -51,9 +52,14 @@ public class MainActivity extends AppCompatActivity {
     void ready() {
         setupToolbar();
         setupDrawer();
+
         initCategories();
         addCategory(getDataList());
+
+        Log.d(TAG, MoneyTrackerApplication.getAuthKey());
         getSupportFragmentManager().beginTransaction().replace(R.id.main_container, new ExpensesFragment_()).commit();
+
+        TrackerSyncAdapter.initializeSyncAdapter(this);
 
     }
 
@@ -153,18 +159,21 @@ public class MainActivity extends AppCompatActivity {
     void addCategory(List<Categories> list){
         RestService restService = new RestService();
         for (Categories cat: list){
-            CreateCategory createCategory = restService.createCategory(cat.name);
-            switch (createCategory.getStatus()){
+            CreateCategoryModel createCategoryModel = restService.createCat(cat.name);
+            switch (createCategoryModel.getStatus()){
 
                 case ConstantBox.SUCCESS:
-                    Log.d(TAG, "Status: " + createCategory.getStatus() +
-                            ", Title: " + createCategory.getData().getTitle() +
-                            ", Id: " + createCategory.getData().getId() +
-                            MoneyTrackerApplication.getAuthKey());
+                    Log.d(TAG, "Status: " + createCategoryModel.getStatus() +
+                            ", Title: " + createCategoryModel.getData().getTitle() +
+                            ", Id: " + createCategoryModel.getData().getId());
                     break;
 
                 case ConstantBox.UNAUTHORIZED:
                     startActivity(new Intent(this, LoginActivity_.class));
+                    break;
+
+                case ConstantBox.ERROR:
+                    Log.d(TAG, "Ошибка при добавлении категории");
                     break;
             }
 
