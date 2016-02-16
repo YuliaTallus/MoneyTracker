@@ -18,6 +18,7 @@ import com.google.android.gms.common.AccountPicker;
 import com.yuliatallus.moneytracker.MoneyTrackerApplication;
 import com.yuliatallus.moneytracker.R;
 import com.yuliatallus.moneytracker.rest.RestService;
+import com.yuliatallus.moneytracker.rest.model.GoogleJsonModel;
 import com.yuliatallus.moneytracker.rest.model.UserLoginModel;
 import com.yuliatallus.moneytracker.util.ConstantBox;
 import com.yuliatallus.moneytracker.util.NetworkStatusChecker;
@@ -43,6 +44,8 @@ public class LoginActivity extends AppCompatActivity{
     public final static String SCOPES = G_PLUS_SCOPE + " " + USERINFO_SCOPE + " " + EMAIL_SCOPE;
 
 
+
+
     @ViewById(R.id.login_activity)
     LinearLayout linLayout;
 
@@ -58,8 +61,6 @@ public class LoginActivity extends AppCompatActivity{
     @ViewById(R.id.no_registration_text_view)
     TextView noRegText;
 
-    @ViewById(R.id.sign_in_button)
-    Button signInButton;
 
     @Click(R.id.login_button)
     void loginButtonClicked(){
@@ -116,7 +117,16 @@ public class LoginActivity extends AppCompatActivity{
 
         Log.e("LOG_TAG_TOKEN", " GOOGLE_TOKEN + " + MoneyTrackerApplication.getGoogleKey(this));
 
-        if (MoneyTrackerApplication.getGoogleKey(this).equalsIgnoreCase("2")){
+        if (!MoneyTrackerApplication.getGoogleKey(this).equalsIgnoreCase("2")){
+
+//            RestService restService = new RestService();
+//            GoogleJsonModel googleJsonModel = restService.getJsonModel(this);
+//
+//            Log.e("EMAIL", googleJsonModel.getEmail() );
+//            Log.e("FAMILYNAME", googleJsonModel.getFamilyName() );
+//            Log.e("NAME", googleJsonModel.getName() );
+//            Log.e("LINK", googleJsonModel.getLink() );
+
             Intent regIntent = new Intent(LoginActivity.this, MainActivity_.class);
             startActivity(regIntent);
             finish();

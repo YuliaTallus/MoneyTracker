@@ -3,6 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height= "@dimen/drawer_header_height"
+    android:id="@+id/drawer_header"
     android:background="@mipmap/drawer_patt"
     android:orientation = "vertical"
     android:paddingTop="@dimen/drawer_header_padding_top"
@@ -12,6 +13,7 @@
     <ImageView
         android:layout_width="@dimen/picture_size"
         android:layout_height="@dimen/picture_size"
+        android:id="@+id/profile_picture"
         android:src="@mipmap/av"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
@@ -31,6 +33,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:id="@+id/name_and_surname"
             android:text="@string/name"
             android:textSize="@dimen/text_size"
             android:fontFamily="sans-serif-medium"
@@ -39,6 +42,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:id="@+id/e_mail"
             android:text="@string/email"
             android:textSize="@dimen/text_size"
             android:fontFamily="sans-serif"

@@ -35,7 +35,7 @@ public class MoneyTrackerApplication extends Application{
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
         SharedPreferences.Editor editor = preferences.edit();
         editor.putString(GOOGLE_TOKEN_KEY, token);
-        editor.commit();
+        editor.apply();
     }
 
     public static String getGoogleKey(Context context){
