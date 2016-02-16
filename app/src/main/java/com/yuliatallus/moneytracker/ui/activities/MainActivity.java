@@ -18,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.activeandroid.query.Select;
+import com.github.siyamed.shapeimageview.CircularImageView;
 import com.yuliatallus.moneytracker.MoneyTrackerApplication;
 import com.yuliatallus.moneytracker.database.Categories;
 import com.yuliatallus.moneytracker.rest.RestService;
@@ -224,7 +225,7 @@ public class MainActivity extends AppCompatActivity {
     @UiThread
     void imageChanging(){
 
-        ImageView i = (ImageView)findViewById(R.id.profile_picture);
+        CircularImageView i = (CircularImageView)findViewById(R.id.profile_picture);
         i.setImageBitmap(bitmap);
 
     }

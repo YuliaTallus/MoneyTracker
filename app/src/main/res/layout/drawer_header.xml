@@ -10,7 +10,7 @@
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
 
-    <ImageView
+    <com.github.siyamed.shapeimageview.CircularImageView
         android:layout_width="@dimen/picture_size"
         android:layout_height="@dimen/picture_size"
         android:id="@+id/profile_picture"
