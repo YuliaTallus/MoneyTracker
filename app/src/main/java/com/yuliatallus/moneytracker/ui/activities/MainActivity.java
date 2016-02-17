@@ -67,7 +67,6 @@ public class MainActivity extends AppCompatActivity {
         getInfoForDrawer();
 
         initCategories();
-        //addCategory(getDataList());
 
         Log.d(TAG, MoneyTrackerApplication.getAuthKey());
         getSupportFragmentManager().beginTransaction().replace(R.id.main_container, new ExpensesFragment_()).commit();
@@ -236,5 +235,7 @@ public class MainActivity extends AppCompatActivity {
         nameAndSurnameText.setText(name);
         eMailText.setText(email);
     }
+
+
 
 }

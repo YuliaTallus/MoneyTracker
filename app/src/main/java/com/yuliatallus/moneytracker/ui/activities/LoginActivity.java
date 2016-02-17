@@ -17,7 +17,9 @@ import com.google.android.gms.auth.UserRecoverableAuthException;
 import com.google.android.gms.common.AccountPicker;
 import com.yuliatallus.moneytracker.MoneyTrackerApplication;
 import com.yuliatallus.moneytracker.R;
+import com.yuliatallus.moneytracker.rest.RestClient;
 import com.yuliatallus.moneytracker.rest.RestService;
+import com.yuliatallus.moneytracker.rest.model.GetAllCategoriesModel;
 import com.yuliatallus.moneytracker.rest.model.GoogleJsonModel;
 import com.yuliatallus.moneytracker.rest.model.UserLoginModel;
 import com.yuliatallus.moneytracker.util.ConstantBox;
@@ -77,6 +79,7 @@ public class LoginActivity extends AppCompatActivity{
     void btnGplusLogin(){
         Intent intent = AccountPicker.newChooseAccountIntent(null, null, new String[]{"com.google"}, false, null, null, null, null);
         startActivityForResult(intent, 10);
+
     }
 
     @Override
@@ -142,4 +145,6 @@ public class LoginActivity extends AppCompatActivity{
 
 
     }
+
+
 }
