@@ -9,6 +9,8 @@ import retrofit.http.Query;
 public interface CreateCategoryApi {
 
     @GET("/categories/add")
-    CreateCategoryModel createCategory(@Query("title") String title,
-                                  @Query("auth_token") String token);
+    CreateCategoryModel createCategory(
+            @Query("google_token") String gToken,
+            @Query("title") String title,
+            @Query("auth_token") String token);
 }

@@ -46,6 +46,11 @@
             android:id="@+id/login_button"
             android:text="@string/enter_text" />
 
+        <com.google.android.gms.common.SignInButton
+            android:id="@+id/sign_in_button"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/login_act_text_height"/>
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

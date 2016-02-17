@@ -84,24 +84,8 @@ public class AddExpenseActivity extends AppCompatActivity {
                 noteToExpense.equals("")){
             Snackbar.make(linLayout, R.string.fill_fields, Snackbar.LENGTH_SHORT).show();
         }else{
-            spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
-                @Override
-                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                    categoryToExpense = (Categories)spinner.getSelectedItem();
-//                    categoryToExpense = new  Select().from(Categories.class)
-//                            .where("name = ?", spinner.getItemAtPosition(position).toString())
-//                            .orderBy("RANDOM()")
-//                            .executeSingle();
-//                    Log.e(TAG, "CATEGORY TESTING!!!" + spinner.getItemAtPosition(position).toString());
-
-                }
-
-                @Override
-                public void onNothingSelected(AdapterView<?> parent) {
-
-                }
-            });
+            categoryToExpense = (Categories)spinner.getSelectedItem();
 
             Date date = new Date();
             SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");

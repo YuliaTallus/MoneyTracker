@@ -1,5 +1,6 @@
 package com.yuliatallus.moneytracker.rest;
 
+import com.yuliatallus.moneytracker.rest.api.CheckGoogleTokenApi;
 import com.yuliatallus.moneytracker.rest.api.CreateCategoryApi;
 import com.yuliatallus.moneytracker.rest.api.CreateExpenseApi;
 import com.yuliatallus.moneytracker.rest.api.LoginUserApi;
@@ -18,6 +19,7 @@ public class RestClient {
     private CreateExpenseApi createExpenseApi;
     private SyncCategoryApi syncCategoryApi;
     private SyncExpensesApi syncExpensesApi;
+    private CheckGoogleTokenApi checkGoogleTokenApi;
 
 
     public RestClient(){
@@ -32,6 +34,7 @@ public class RestClient {
         createExpenseApi = restAdapter.create(CreateExpenseApi.class);
         syncCategoryApi = restAdapter.create(SyncCategoryApi.class);
         syncExpensesApi = restAdapter.create(SyncExpensesApi.class);
+        checkGoogleTokenApi = restAdapter.create(CheckGoogleTokenApi.class);
     }
 
     public RegisterUserApi getRegisterUserApi() {
@@ -58,4 +61,7 @@ public class RestClient {
         return syncExpensesApi;
     }
 
+    public CheckGoogleTokenApi getCheckGoogleTokenApi() {
+        return checkGoogleTokenApi;
+    }
 }

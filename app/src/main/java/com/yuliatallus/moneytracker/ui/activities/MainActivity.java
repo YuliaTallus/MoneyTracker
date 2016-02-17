@@ -1,6 +1,8 @@
 package com.yuliatallus.moneytracker.ui.activities;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -11,12 +13,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import com.activeandroid.query.Select;
+import com.github.siyamed.shapeimageview.CircularImageView;
 import com.yuliatallus.moneytracker.MoneyTrackerApplication;
 import com.yuliatallus.moneytracker.database.Categories;
 import com.yuliatallus.moneytracker.rest.RestService;
 import com.yuliatallus.moneytracker.rest.model.CreateCategoryModel;
+import com.yuliatallus.moneytracker.rest.model.GoogleJsonModel;
 import com.yuliatallus.moneytracker.sync.TrackerSyncAdapter;
 import com.yuliatallus.moneytracker.ui.fragments.CategoriesFragment_;
 import com.yuliatallus.moneytracker.ui.fragments.ExpensesFragment_;
@@ -28,8 +33,12 @@ import com.yuliatallus.moneytracker.util.ConstantBox;
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Background;
 import org.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.ViewById;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
 import java.util.List;
 
 
@@ -37,10 +46,13 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = MainActivity.class.getSimpleName();
+    String pictureUrl, name, email;
+    Bitmap bitmap;
 
     protected Fragment fragment;
     @ViewById(R.id.drawer_layout)
     DrawerLayout drawerLayout;
+
 
     @ViewById(R.id.navigtion_view)
     NavigationView navigationView;
@@ -52,14 +64,15 @@ public class MainActivity extends AppCompatActivity {
     void ready() {
         setupToolbar();
         setupDrawer();
+        getInfoForDrawer();
 
-        initCategories();
-        addCategory(getDataList());
+        //initCategories();
+        //addCategory(getDataList());
 
         Log.d(TAG, MoneyTrackerApplication.getAuthKey());
         getSupportFragmentManager().beginTransaction().replace(R.id.main_container, new ExpensesFragment_()).commit();
 
-        TrackerSyncAdapter.initializeSyncAdapter(this);
+        //TrackerSyncAdapter.initializeSyncAdapter(this);
 
     }
 
@@ -99,6 +112,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
     private void setupDrawer() {
+
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(MenuItem item) {
@@ -159,7 +173,7 @@ public class MainActivity extends AppCompatActivity {
     void addCategory(List<Categories> list){
         RestService restService = new RestService();
         for (Categories cat: list){
-            CreateCategoryModel createCategoryModel = restService.createCat(cat.name);
+            CreateCategoryModel createCategoryModel = restService.createCat(this, cat.name);
             switch (createCategoryModel.getStatus()){
 
                 case ConstantBox.SUCCESS:
@@ -181,5 +195,46 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+
+    @Background
+    void getInfoForDrawer() {
+        if (!MoneyTrackerApplication.getGoogleKey(this).equalsIgnoreCase("2")) {
+
+            RestService restService = new RestService();
+            GoogleJsonModel googleJsonModel = restService.getJsonModel(this);
+
+            name = googleJsonModel.getName();
+            email = googleJsonModel.getEmail();
+            pictureUrl = googleJsonModel.getPicture();
+
+            try {
+                bitmap = BitmapFactory.decodeStream((InputStream)new URL(googleJsonModel.getPicture()).getContent());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            imageChanging();
+            textChanging();
+
+        }
+    }
+
+    @UiThread
+    void imageChanging(){
+
+        CircularImageView i = (CircularImageView)findViewById(R.id.profile_picture);
+        i.setImageBitmap(bitmap);
+
+    }
+
+    @UiThread
+    void textChanging(){
+
+        TextView nameAndSurnameText = (TextView)findViewById(R.id.name_and_surname);
+        TextView eMailText = (TextView)findViewById(R.id.e_mail);
+
+        nameAndSurnameText.setText(name);
+        eMailText.setText(email);
+    }
 
 }

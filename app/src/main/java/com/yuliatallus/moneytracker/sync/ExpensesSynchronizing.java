@@ -1,6 +1,7 @@
 package com.yuliatallus.moneytracker.sync;
 
 
+import android.content.Context;
 import android.util.Log;
 
 import com.activeandroid.query.Select;
@@ -18,7 +19,7 @@ public class ExpensesSynchronizing {
 
     private static final String TAG  = ExpensesSynchronizing.class.getSimpleName();
 
-    public static void synchronizeExpenses(){
+    public static void synchronizeExpenses(Context context){
 
 //        Categories testCat = new Select().from(Categories.class).executeSingle();
 //        Log.d("TEST CATEGORY!!!", testCat.toString()+ " " + testCat.getId());
@@ -26,7 +27,7 @@ public class ExpensesSynchronizing {
 //        newExpense.save();
 
         RestService restService = new RestService();
-        SyncExpensesModel syncExpensesModel = restService.syncExpense(getDataForSync());
+        SyncExpensesModel syncExpensesModel = restService.syncExpense(context,getDataForSync());
         Log.d(TAG, syncExpensesModel.getStatus());
 
     }

@@ -27,8 +27,8 @@ public class TrackerSyncAdapter extends AbstractThreadedSyncAdapter {
     public void onPerformSync(Account account, Bundle extras, String authority, ContentProviderClient provider, SyncResult syncResult) {
         Log.d(TAG, "Synchronizing!!!");
 
-        CategoriesSynchronizing.synchronizeCategories();
-        ExpensesSynchronizing.synchronizeExpenses();
+        CategoriesSynchronizing.synchronizeCategories(getContext());
+        ExpensesSynchronizing.synchronizeExpenses(getContext());
     }
 
     public static void syncImmediately(Context context){

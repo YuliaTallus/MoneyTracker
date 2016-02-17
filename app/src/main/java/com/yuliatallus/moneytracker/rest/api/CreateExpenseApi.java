@@ -9,8 +9,10 @@ import retrofit.http.Query;
 public interface CreateExpenseApi {
 
     @GET("/transactions/add")
-    CreateExpenseModel createExpense (@Query("sum") String sum,
-                                           @Query("comment") String comment,
-                                           @Query("category_id") String category_id,
-                                           @Query("tr_date") String tr_date);
+    CreateExpenseModel createExpense (
+            @Query("google_token") String gToken,
+            @Query("sum") String sum,
+            @Query("comment") String comment,
+            @Query("category_id") String category_id,
+            @Query("tr_date") String tr_date);
 }
