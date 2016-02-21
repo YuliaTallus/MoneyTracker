@@ -38,6 +38,7 @@
     <string name="content_authority">com.yuliatallus.moneytracker</string>
     <string name="sync_account_type">moneytracker.yuliatallus.com</string>
     <string name="add_category_text">Введите название категории: </string>
+    <string name="delete_text">Delete</string>
 
 
 </resources>

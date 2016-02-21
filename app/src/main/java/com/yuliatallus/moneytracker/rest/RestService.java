@@ -3,9 +3,9 @@ package com.yuliatallus.moneytracker.rest;
 import android.content.Context;
 
 import com.yuliatallus.moneytracker.MoneyTrackerApplication;
+import com.yuliatallus.moneytracker.rest.model.AllCategoriesModel;
 import com.yuliatallus.moneytracker.rest.model.CreateCategoryModel;
 import com.yuliatallus.moneytracker.rest.model.CreateExpenseModel;
-import com.yuliatallus.moneytracker.rest.model.GetAllCategoriesModel;
 import com.yuliatallus.moneytracker.rest.model.GoogleJsonModel;
 import com.yuliatallus.moneytracker.rest.model.SyncCategoryModel;
 import com.yuliatallus.moneytracker.rest.model.SyncExpensesModel;
@@ -49,7 +49,7 @@ public class RestService {
         return restClient.getCheckGoogleTokenApi().googleJson(MoneyTrackerApplication.getGoogleKey(context));
     }
 
-    public GetAllCategoriesModel getCategories(Context context){
+    public AllCategoriesModel getCategories(Context context){
         return restClient.getAllCategoriesApi()
                 .getAllCategories(MoneyTrackerApplication.getGoogleKey(context), MoneyTrackerApplication.getAuthKey());
     }

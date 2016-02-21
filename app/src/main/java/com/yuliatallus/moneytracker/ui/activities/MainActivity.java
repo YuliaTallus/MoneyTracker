@@ -66,8 +66,6 @@ public class MainActivity extends AppCompatActivity {
         setupDrawer();
         getInfoForDrawer();
 
-        initCategories();
-
         Log.d(TAG, MoneyTrackerApplication.getAuthKey());
         getSupportFragmentManager().beginTransaction().replace(R.id.main_container, new ExpensesFragment_()).commit();
 
@@ -75,20 +73,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void initCategories(){
-        Categories catEntertainment = new Categories("Развлечения");
-        catEntertainment.save();
-        Categories catBooks = new Categories("Книги");
-        catBooks.save();
-        Categories catEducation = new Categories("Образование");
-        catEducation.save();
-        Categories catPhone = new Categories("Телефон");
-        catPhone.save();
-        Categories catFood = new Categories("Еда");
-        catFood .save();
-        Categories catClothes = new Categories("Одежда");
-        catClothes.save();
-    }
 
     @Override
     public void onBackPressed() {

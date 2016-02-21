@@ -2,7 +2,6 @@ package com.yuliatallus.moneytracker.ui.activities;
 
 import android.accounts.AccountManager;
 import android.content.Intent;
-import android.media.session.MediaSession;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -17,10 +16,7 @@ import com.google.android.gms.auth.UserRecoverableAuthException;
 import com.google.android.gms.common.AccountPicker;
 import com.yuliatallus.moneytracker.MoneyTrackerApplication;
 import com.yuliatallus.moneytracker.R;
-import com.yuliatallus.moneytracker.rest.RestClient;
 import com.yuliatallus.moneytracker.rest.RestService;
-import com.yuliatallus.moneytracker.rest.model.GetAllCategoriesModel;
-import com.yuliatallus.moneytracker.rest.model.GoogleJsonModel;
 import com.yuliatallus.moneytracker.rest.model.UserLoginModel;
 import com.yuliatallus.moneytracker.util.ConstantBox;
 import com.yuliatallus.moneytracker.util.NetworkStatusChecker;
@@ -139,7 +135,7 @@ public class LoginActivity extends AppCompatActivity{
                 break;
 
             case ConstantBox.ERROR:
-                Snackbar.make(linLayout, R.string.unknown_error, Snackbar.LENGTH_SHORT).show();
+                Log.d(TAG, "Status: " + userLoginModel.getStatus() + ", token: " + MoneyTrackerApplication.getAuthKey());
                 break;
         }
 
