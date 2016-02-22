@@ -5,6 +5,7 @@ import android.content.Context;
 import com.yuliatallus.moneytracker.MoneyTrackerApplication;
 import com.yuliatallus.moneytracker.rest.model.CreateCategoryModel;
 import com.yuliatallus.moneytracker.rest.model.CreateExpenseModel;
+import com.yuliatallus.moneytracker.rest.model.GetAllCategoriesModel;
 import com.yuliatallus.moneytracker.rest.model.GoogleJsonModel;
 import com.yuliatallus.moneytracker.rest.model.SyncCategoryModel;
 import com.yuliatallus.moneytracker.rest.model.SyncExpensesModel;
@@ -29,22 +30,27 @@ public class RestService {
     }
 
     public CreateCategoryModel createCat(Context context, String title){
-        return restClient.getCreateCategoryApi().createCategory(MoneyTrackerApplication.getGoogleKey(context),title, MoneyTrackerApplication.getAuthKey());
+        return restClient.getCreateCategoryApi().createCategory(MoneyTrackerApplication.getGoogleKey(context), title, MoneyTrackerApplication.getAuthKey());
     }
 
     public CreateExpenseModel createExpense(Context context,String sum, String comment, String categoryId, String date){
-        return restClient.getCreateExpenseApi().createExpense(MoneyTrackerApplication.getGoogleKey(context),sum, comment, categoryId, date);
+        return restClient.getCreateExpenseApi().createExpense(MoneyTrackerApplication.getGoogleKey(context), sum, comment, categoryId, date);
     }
 
     public SyncCategoryModel syncCategory(Context context, String data){
-        return restClient.getSyncCategoryApi().syncCategory(MoneyTrackerApplication.getGoogleKey(context),data, MoneyTrackerApplication.getAuthKey());
+        return restClient.getSyncCategoryApi().syncCategory(MoneyTrackerApplication.getGoogleKey(context), data, MoneyTrackerApplication.getAuthKey());
     }
 
     public SyncExpensesModel syncExpense(Context context, String data){
-        return restClient.getSyncExpensesApi().syncExpense(MoneyTrackerApplication.getGoogleKey(context),data, MoneyTrackerApplication.getAuthKey());
+        return restClient.getSyncExpensesApi().syncExpense(MoneyTrackerApplication.getGoogleKey(context), data, MoneyTrackerApplication.getAuthKey());
     }
 
     public GoogleJsonModel getJsonModel(Context context){
         return restClient.getCheckGoogleTokenApi().googleJson(MoneyTrackerApplication.getGoogleKey(context));
+    }
+
+    public GetAllCategoriesModel getCategories(Context context){
+        return restClient.getAllCategoriesApi()
+                .getAllCategories(MoneyTrackerApplication.getGoogleKey(context), MoneyTrackerApplication.getAuthKey());
     }
 }

@@ -5,6 +5,7 @@
     <string name="nav_drawer_categories">Категории</string>
     <string name="nav_drawer_statistics">Статистика</string>
     <string name="nav_drawer_settings">Настройки</string>
+    <string name="search_title">Search</string>
     <string name="name">Yiliya Shestakova</string>
     <string name="email">yushestakova@icloud.com</string>
     <string name="name_text">Name</string>
@@ -36,6 +37,7 @@
     <string name="login_is_busy">Пользователь с таким логином уже существует</string>
     <string name="content_authority">com.yuliatallus.moneytracker</string>
     <string name="sync_account_type">moneytracker.yuliatallus.com</string>
+    <string name="add_category_text">Введите название категории: </string>
 
 
 </resources>

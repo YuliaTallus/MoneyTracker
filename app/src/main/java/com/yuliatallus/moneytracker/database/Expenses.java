@@ -3,6 +3,7 @@ package com.yuliatallus.moneytracker.database;
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
+import com.activeandroid.query.Select;
 import com.yuliatallus.moneytracker.util.ConstantBox;
 
 import java.util.List;
@@ -34,7 +35,10 @@ public class Expenses extends Model{
         this.category = category;
     }
 
-    public List<Expenses> expenses(){
-        return getMany(Expenses.class, ConstantBox.CATEGORY);
+    public static List<Expenses> expenses(String filter){
+        return new Select()
+                .from(Expenses.class)
+                .where("name LIKE ?", new String[]{'%' + filter + '%'})
+                .execute();
     }
 }
