@@ -32,7 +32,7 @@ import retrofit.client.Response;
 @EActivity(R.layout.activity_splash)
 public class SplashActivity extends AppCompatActivity{
 
-    private static final String TAG = LoginActivity.class.getSimpleName();
+    private static final String TAG = SplashActivity.class.getSimpleName();
 
     private String gToken;
     private RestClient restClient;
@@ -47,9 +47,8 @@ public class SplashActivity extends AppCompatActivity{
             gToken = MoneyTrackerApplication.getGoogleKey(this);
             if (gToken.equalsIgnoreCase("2")){
                 launchActivity();
-            }
-            else {
-                checkTokenValid();
+            } else {
+               checkTokenValid();
             }
         }
         else {
@@ -75,7 +74,7 @@ public class SplashActivity extends AppCompatActivity{
             @Override
             public void success(GoogleTokenStatusModel googleTokenStatusModel, Response response) {
                 Log.e(TAG, googleTokenStatusModel.getStatus());
-                if (googleTokenStatusModel.getStatus().equalsIgnoreCase("error")){
+                if (googleTokenStatusModel.getStatus().equalsIgnoreCase("Error")){
                     doubleTokenExc();
                 }
                 else{
@@ -94,7 +93,7 @@ public class SplashActivity extends AppCompatActivity{
 
     private void doubleTokenExc() {
         Intent intent = AccountPicker.newChooseAccountIntent(null, null, new String[]{"com.google"}, false, null, null, null, null);
-        startActivityForResult(intent, 123);
+        startActivityForResult(intent, 10);
     }
 
     @Override

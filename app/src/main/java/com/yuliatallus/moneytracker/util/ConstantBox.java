@@ -20,5 +20,7 @@ public final class ConstantBox {
     public static final String SCOPES = G_PLUS_SCOPE + " " + USERINFO_SCOPE + " " + EMAIL_SCOPE;
     public static final String LOG_TAG_TOKEN = "GOOGLE_TOKEN";
     public static final String FILTER_ID = "filterID";
+    public static final String OK = "Ок";
+    public static final String CANCEL = "Отмена";
 
 }

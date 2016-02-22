@@ -5,11 +5,13 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.content.Loader;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.view.ActionMode;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -19,10 +21,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.SearchView;
-import android.widget.TextView;
 
-
-import com.activeandroid.query.Select;
 import com.yuliatallus.moneytracker.R;
 import com.yuliatallus.moneytracker.adapters.CategoriesAdapter;
 import com.yuliatallus.moneytracker.database.Categories;
@@ -46,9 +45,13 @@ import java.util.List;
 @OptionsMenu(R.menu.search_menu)
 public class CategoriesFragment extends Fragment {
 
+
     private static final String TAG = CategoriesFragment.class.getSimpleName();
-    private static final String OK = "Ок";
-    private static final String CANCEL = "Отмена";
+
+    private CategoriesAdapter adapter;
+    private ActionModeCallback actionModeCallback = new ActionModeCallback();
+    private ActionMode actionMode;
+
 
     @ViewById(R.id.context_recyclerview)
     RecyclerView categoriesRecyclerView;
@@ -58,8 +61,6 @@ public class CategoriesFragment extends Fragment {
 
     @OptionsMenuItem(R.id.search_action)
     MenuItem menuItem;
-
-
 
     @Click(R.id.fab)
     void fabClicked() {
@@ -72,15 +73,16 @@ public class CategoriesFragment extends Fragment {
             final EditText userInput = (EditText) addCatView.findViewById(R.id.input_text);
             mDialogBuilder
                     .setCancelable(false)
-                    .setPositiveButton(OK,
+                    .setPositiveButton(ConstantBox.OK,
                             new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog,int id) {
                                     Categories newCat = new Categories(userInput.getText().toString());
                                     newCat.save();
                                     addCategory(newCat);
+                                    refreshCategoriesFragment();
                                 }
                             })
-                    .setNegativeButton(CANCEL,
+                    .setNegativeButton(ConstantBox.CANCEL,
                             new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog,int id) {
                                     dialog.cancel();
@@ -105,7 +107,7 @@ public class CategoriesFragment extends Fragment {
     @Override
     public void onPrepareOptionsMenu(Menu menu) {
         super.onPrepareOptionsMenu(menu);
-        SearchView searchView = (SearchView)menuItem.getActionView();
+        SearchView searchView = (SearchView) menuItem.getActionView();
         searchView.setQueryHint(getString(R.string.search_title));
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -149,8 +151,25 @@ public class CategoriesFragment extends Fragment {
 
             @Override
             public void onLoadFinished(Loader<List<Categories>> loader, List<Categories> data) {
+                adapter = new CategoriesAdapter(data, new CategoriesAdapter.ClickListener() {
+                    @Override
+                    public void onItemClicked(int position) {
+                        if (actionMode!=null){
+                            toggleSelection(position);
+                        }
+                    }
 
-                categoriesRecyclerView.setAdapter(new CategoriesAdapter(data));
+                    @Override
+                    public boolean onItemLongClicked(int position) {
+                        if (actionMode == null) {
+                            AppCompatActivity activity = (AppCompatActivity) getActivity();
+                            actionMode = activity.startSupportActionMode(actionModeCallback);
+                        }
+                        toggleSelection(position);
+                        return true;
+                    }
+                });
+                categoriesRecyclerView.setAdapter(adapter);
             }
 
             @Override
@@ -183,6 +202,61 @@ public class CategoriesFragment extends Fragment {
 
     }
 
+    private void toggleSelection(int position){
+        adapter.toggleSelection(position);
+        int count = adapter.getSelectedItemsCount();
+
+        if (count==0){
+            actionMode.finish();
+        }
+        else {
+            actionMode.setTitle(String.valueOf(count));
+            actionMode.invalidate();
+        }
+    }
+
+    private class ActionModeCallback implements ActionMode.Callback{
+
+        @Override
+        public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+            mode.getMenuInflater().inflate(R.menu.contexual_action_bar, menu);
+            return true;
+        }
+
+        @Override
+        public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+            return false;
+        }
+
+        @Override
+        public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+            switch (item.getItemId()){
+                case R.id.item_remove:
+                    adapter.removeItems(adapter.getSelectedItems());
+                    mode.finish();
+                    return true;
+                default:
+                    return false;
+            }
+
+        }
+
+        @Override
+        public void onDestroyActionMode(ActionMode mode) {
+            adapter.clearSelection();
+            actionMode = null;
+
+        }
+    }
+
+    void refreshCategoriesFragment(){
+        Fragment fragment;
+        fragment = getFragmentManager().findFragmentById(R.id.main_container);
+        FragmentTransaction fragTransaction = getFragmentManager().beginTransaction();
+        fragTransaction.detach(fragment);
+        fragTransaction.attach(fragment);
+        fragTransaction.commit();
+    }
 
 
 }
