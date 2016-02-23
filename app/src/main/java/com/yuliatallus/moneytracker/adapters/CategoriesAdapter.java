@@ -1,9 +1,13 @@
 package com.yuliatallus.moneytracker.adapters;
 
+import android.content.Context;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 import com.yuliatallus.moneytracker.R;
 import com.yuliatallus.moneytracker.database.Categories;
@@ -15,10 +19,13 @@ import java.util.List;
 public class CategoriesAdapter extends SelectableAdapter<CategoriesAdapter.CardViewHolder> {
     List<Categories> categories;
     private  ClickListener clickListener;
+    private Context context;
+    private int lastPosition = -1;
 
-    public CategoriesAdapter(List<Categories> categories, ClickListener clickListener) {
+    public CategoriesAdapter(Context context, List<Categories> categories, ClickListener clickListener) {
         this.clickListener = clickListener;
         this.categories = categories;
+        this.context = context;
     }
 
     @Override
@@ -27,11 +34,19 @@ public class CategoriesAdapter extends SelectableAdapter<CategoriesAdapter.CardV
         return new CardViewHolder(convertView, clickListener);
     }
 
+    private void setAnimation(View viewToAnimate, int position){
+        if (position > lastPosition){
+            Animation animation = AnimationUtils.loadAnimation(context, R.anim.slide);
+            viewToAnimate.startAnimation(animation);
+            lastPosition = position;
+        }
+    }
+
     @Override
     public void onBindViewHolder(CardViewHolder holder, int position) {
         Categories category = categories.get(position);
-
         holder.name_text.setText(category.name);
+        setAnimation(holder.cardView, position);
         holder.selectedOverlay.setVisibility(isSelected(position) ? View.VISIBLE : View.INVISIBLE);
 
     }
@@ -90,6 +105,7 @@ public class CategoriesAdapter extends SelectableAdapter<CategoriesAdapter.CardV
 
     public class CardViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener,View.OnLongClickListener{
         protected TextView name_text;
+        protected CardView cardView;
         protected View selectedOverlay;
 
         private ClickListener clickListener;
@@ -99,6 +115,7 @@ public class CategoriesAdapter extends SelectableAdapter<CategoriesAdapter.CardV
             name_text = (TextView) convertView.findViewById(R.id.name_text);
             selectedOverlay = itemView.findViewById(R.id.selected_overlay);
             this.clickListener = clickListener;
+            cardView = (CardView) itemView.findViewById(R.id.card_view);
 
             itemView.setOnClickListener(this);
             itemView.setOnLongClickListener(this);
