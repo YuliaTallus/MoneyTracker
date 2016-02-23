@@ -10,6 +10,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.content.Loader;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ActionMode;
 import android.support.v7.widget.LinearLayoutManager;
@@ -47,7 +48,6 @@ public class CategoriesFragment extends Fragment {
 
 
     private static final String TAG = CategoriesFragment.class.getSimpleName();
-
     private CategoriesAdapter adapter;
     private ActionModeCallback actionModeCallback = new ActionModeCallback();
     private ActionMode actionMode;
@@ -58,6 +58,9 @@ public class CategoriesFragment extends Fragment {
 
     @ViewById(R.id.fab)
     FloatingActionButton floatingActionButton;
+
+    @ViewById(R.id.swipe_refresh_layout)
+    SwipeRefreshLayout swipeRefreshLayout;
 
     @OptionsMenuItem(R.id.search_action)
     MenuItem menuItem;
@@ -75,7 +78,7 @@ public class CategoriesFragment extends Fragment {
                     .setCancelable(false)
                     .setPositiveButton(ConstantBox.OK,
                             new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog,int id) {
+                                public void onClick(DialogInterface dialog, int id) {
                                     Categories newCat = new Categories(userInput.getText().toString());
                                     newCat.save();
                                     addCategory(newCat);
@@ -84,14 +87,13 @@ public class CategoriesFragment extends Fragment {
                             })
                     .setNegativeButton(ConstantBox.CANCEL,
                             new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog,int id) {
+                                public void onClick(DialogInterface dialog, int id) {
                                     dialog.cancel();
                                 }
                             });
             AlertDialog alertDialog = mDialogBuilder.create();
-
+            alertDialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
             alertDialog.show();
-
         }
     }
 
@@ -102,6 +104,13 @@ public class CategoriesFragment extends Fragment {
         categoriesRecyclerView.setLayoutManager(linearLayoutManager);
         getActivity().setTitle(getString(R.string.nav_drawer_categories));
         loadData("");
+        swipeRefreshLayout.setColorSchemeResources(R.color.color_accent, R.color.color_primary_dark, R.color.cardview_shadow_end_color);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                loadData("");
+            }
+        });
     }
 
     @Override
@@ -127,14 +136,12 @@ public class CategoriesFragment extends Fragment {
     }
 
     @Background(delay = 700, id = ConstantBox.FILTER_ID)
-    public  void delayedQuery(String filter){
+    public void delayedQuery(String filter) {
         loadData(filter);
     }
 
 
-
-    private void loadData(final String filter)
-    {
+    private void loadData(final String filter) {
         getLoaderManager().restartLoader(0, null, new LoaderManager.LoaderCallbacks<List<Categories>>() {
             @Override
             public Loader<List<Categories>> onCreateLoader(int id, Bundle args) {
@@ -151,10 +158,10 @@ public class CategoriesFragment extends Fragment {
 
             @Override
             public void onLoadFinished(Loader<List<Categories>> loader, List<Categories> data) {
-                adapter = new CategoriesAdapter(data, new CategoriesAdapter.ClickListener() {
+                adapter = new CategoriesAdapter(getContext(), data, new CategoriesAdapter.ClickListener() {
                     @Override
                     public void onItemClicked(int position) {
-                        if (actionMode!=null){
+                        if (actionMode != null) {
                             toggleSelection(position);
                         }
                     }
@@ -170,6 +177,7 @@ public class CategoriesFragment extends Fragment {
                     }
                 });
                 categoriesRecyclerView.setAdapter(adapter);
+                swipeRefreshLayout.setRefreshing(false);
             }
 
             @Override
@@ -180,42 +188,41 @@ public class CategoriesFragment extends Fragment {
     }
 
     @Background
-    void addCategory(Categories category){
+    void addCategory(Categories category) {
         RestService restService = new RestService();
         CreateCategoryModel createCategoryModel = restService.createCat(getContext(), category.name);
-        switch (createCategoryModel.getStatus()){
+        switch (createCategoryModel.getStatus()) {
 
             case ConstantBox.SUCCESS:
-                    Log.d(TAG, "Status: " + createCategoryModel.getStatus() +
-                            ", Title: " + createCategoryModel.getData().getTitle() +
-                            ", Id: " + createCategoryModel.getData().getId());
-                    break;
+                Log.d(TAG, "Status: " + createCategoryModel.getStatus() +
+                        ", Title: " + createCategoryModel.getData().getTitle() +
+                        ", Id: " + createCategoryModel.getData().getId());
+                break;
 
             case ConstantBox.UNAUTHORIZED:
-                    startActivity(new Intent(getContext(), LoginActivity_.class));
-                    break;
+                startActivity(new Intent(getContext(), LoginActivity_.class));
+                break;
 
             case ConstantBox.ERROR:
-                    Log.d(TAG, "Ошибка при добавлении категории");
-                    break;
+                Log.d(TAG, "Ошибка при добавлении категории");
+                break;
         }
 
     }
 
-    private void toggleSelection(int position){
+    private void toggleSelection(int position) {
         adapter.toggleSelection(position);
         int count = adapter.getSelectedItemsCount();
 
-        if (count==0){
+        if (count == 0) {
             actionMode.finish();
-        }
-        else {
+        } else {
             actionMode.setTitle(String.valueOf(count));
             actionMode.invalidate();
         }
     }
 
-    private class ActionModeCallback implements ActionMode.Callback{
+    private class ActionModeCallback implements ActionMode.Callback {
 
         @Override
         public boolean onCreateActionMode(ActionMode mode, Menu menu) {
@@ -230,7 +237,7 @@ public class CategoriesFragment extends Fragment {
 
         @Override
         public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
-            switch (item.getItemId()){
+            switch (item.getItemId()) {
                 case R.id.item_remove:
                     adapter.removeItems(adapter.getSelectedItems());
                     mode.finish();
@@ -249,7 +256,7 @@ public class CategoriesFragment extends Fragment {
         }
     }
 
-    void refreshCategoriesFragment(){
+    void refreshCategoriesFragment() {
         Fragment fragment;
         fragment = getFragmentManager().findFragmentById(R.id.main_container);
         FragmentTransaction fragTransaction = getFragmentManager().beginTransaction();

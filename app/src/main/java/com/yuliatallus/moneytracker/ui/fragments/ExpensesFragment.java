@@ -51,7 +51,7 @@ public class ExpensesFragment extends Fragment {
     @ViewById(R.id.fab)
     FloatingActionButton floatingActionButton;
 
-    @ViewById(R.id.swipeRefreshLayout)
+    @ViewById(R.id.swipe_refresh_layout)
     SwipeRefreshLayout swipeRefreshLayout;
 
     @OptionsMenuItem(R.id.search_action)
@@ -76,14 +76,16 @@ public class ExpensesFragment extends Fragment {
 
     @Override
     public void onResume() {
+
         super.onResume();
-     //   swipeRefreshLayout.setColorSchemeColors(R.color.color_accent, R.color.color_primary_dark, R.color.cardview_dark_background);
-  //      swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-  //          @Override
- //           public void onRefresh() {
+        loadData("");
+        swipeRefreshLayout.setColorSchemeResources(R.color.color_accent, R.color.color_primary_dark, R.color.cardview_shadow_end_color);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
                 loadData("");
-  //          }
-  //      });
+            }
+        });
 
         ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0,
                 ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
@@ -146,7 +148,7 @@ public class ExpensesFragment extends Fragment {
 
             @Override
             public void onLoadFinished(Loader<List<Expenses>> loader, List<Expenses> data) {
-                swipeRefreshLayout.setRefreshing(false);
+
                 adapter = new ExpensesAdapter(getContext(), data, new ExpensesAdapter.ClickListener() {
                     @Override
                     public void onItemClicked(int position) {
@@ -166,6 +168,7 @@ public class ExpensesFragment extends Fragment {
                     }
                 });
                 expensesRecyclerView.setAdapter(adapter);
+                swipeRefreshLayout.setRefreshing(false);
             }
 
             @Override
@@ -211,14 +214,12 @@ public class ExpensesFragment extends Fragment {
                 default:
                     return false;
             }
-
         }
 
         @Override
         public void onDestroyActionMode(ActionMode mode) {
             adapter.clearSelection();
             actionMode = null;
-
         }
     }
 
