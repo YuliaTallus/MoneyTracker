@@ -38,5 +38,9 @@
         <item name="android:padding">@dimen/activity_vertical_margin</item>
     </style>
 
+    <style name="DialogAnimation">
+        <item name="android:windowEnterAnimation">@anim/alert_dialog_anim</item>
+    </style>
+
 
 </resources>

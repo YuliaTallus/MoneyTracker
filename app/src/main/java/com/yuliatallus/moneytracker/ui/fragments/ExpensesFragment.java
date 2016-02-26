@@ -7,10 +7,12 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.content.Loader;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ActionMode;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -49,13 +51,17 @@ public class ExpensesFragment extends Fragment {
     @ViewById(R.id.fab)
     FloatingActionButton floatingActionButton;
 
+    @ViewById(R.id.swipe_refresh_layout)
+    SwipeRefreshLayout swipeRefreshLayout;
+
     @OptionsMenuItem(R.id.search_action)
     MenuItem menuItem;
 
 
     @Click(R.id.fab)
     void fabClicked() {
-            startActivity(new Intent(getActivity(), AddExpenseActivity_.class));
+        startActivity(new Intent(getActivity(), AddExpenseActivity_.class));
+        getActivity().overridePendingTransition(R.anim.from_middle, R.anim.to_middle);
     }
 
     @AfterViews
@@ -70,8 +76,32 @@ public class ExpensesFragment extends Fragment {
 
     @Override
     public void onResume() {
+
         super.onResume();
         loadData("");
+        swipeRefreshLayout.setColorSchemeResources(R.color.color_accent, R.color.color_primary_dark, R.color.cardview_shadow_end_color);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                loadData("");
+            }
+        });
+
+        ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0,
+                ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+            @Override
+            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
+                adapter.removeItem(viewHolder.getAdapterPosition());
+            }
+        };
+
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
+        itemTouchHelper.attachToRecyclerView(expensesRecyclerView);
     }
 
     @Override
@@ -118,7 +148,8 @@ public class ExpensesFragment extends Fragment {
 
             @Override
             public void onLoadFinished(Loader<List<Expenses>> loader, List<Expenses> data) {
-                adapter = new ExpensesAdapter(data, new ExpensesAdapter.ClickListener() {
+
+                adapter = new ExpensesAdapter(getContext(), data, new ExpensesAdapter.ClickListener() {
                     @Override
                     public void onItemClicked(int position) {
                         if (actionMode!=null){
@@ -137,6 +168,7 @@ public class ExpensesFragment extends Fragment {
                     }
                 });
                 expensesRecyclerView.setAdapter(adapter);
+                swipeRefreshLayout.setRefreshing(false);
             }
 
             @Override
@@ -182,14 +214,12 @@ public class ExpensesFragment extends Fragment {
                 default:
                     return false;
             }
-
         }
 
         @Override
         public void onDestroyActionMode(ActionMode mode) {
             adapter.clearSelection();
             actionMode = null;
-
         }
     }
 
